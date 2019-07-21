@@ -11,16 +11,19 @@ export default class Home extends React.Component{
         this.state = {
             inputVal: '',
             address: null,
-            location: {lat: null, lng: null}
+            myLocation: {lat: null, lng: null},
+            pins: []
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleAddressInput = this.handleAddressInput.bind(this)
+        this.getPinsFromDatabase = this.getPinsFromDatabase.bind(this)
     }
 
     async componentDidMount(){
         const data = await this.getLocation()
-        const location = data.location
-        this.setState({location})
+        const myLocation = data.location
+        this.setState({myLocation})
+        this.getPinsFromDatabase()
     }
 
     async getLocation(){
@@ -30,15 +33,64 @@ export default class Home extends React.Component{
     }
 
     async setCustomLocation(add){
-        add = add.split(' ').join('+')
-        const address = await axios.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${add}&key=${mapsKey}`)
-        console.log(address)
-        this.setState({address})
+        if (add.length){
+            add = add.split(' ').join('+')
+            const data = await axios.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${add}&key=${mapsKey}`)
+            if(data.data.results.length){
+                const { lat, lng } = data.data.results[0].geometry.location
+                const { formatted_address } = data.data.results[0]
+                const address = {lat, lng, name: add.split('+').join(' '), formatted_address}
+                try{
+                    const pins = await axios.post('http://localhost:3001/pins', address)
+                    console.log('total pins', pins)
+                    this.setState({pins: pins.data})
+                } catch(error){
+                    console.log(error)
+                }
+            }
+            
+        }
     }
+
+    async getPinsFromDatabase(){
+        try{
+            const response = await axios.get('http://localhost:3001/pins')
+            const pins = response.data
+            console.log("returned from fetch", response)
+            this.setState({pins: [...this.state.pins, ...pins]})
+        } catch(error){
+            console.log(error)
+        }
+    }
+
+
+    // doFetch(uri){
+    //     let h = new Headers()
+    //     h.append('Accept', 'application/json')
+
+    //     let req = new Request(uri, {
+    //         method: 'GET',
+    //         headers: h,
+    //         mode: 'cors'
+    //     })
+
+    //     console.log('req', req)
+
+    //     fetch(req)
+    //         .then((response) => {
+    //             console.log(response)
+    //             if(response.ok){
+    //                 return response.json()
+    //             }
+    //             else {
+    //                 throw new Error('OH SHIT OH SHIT OH SHIT')
+    //             }
+    //         })
+    // }
+
 
     handleAddressInput(e){
         e.preventDefault()
-        console.log('SUBMITTED')
         this.setCustomLocation(this.state.inputVal)
         this.setState({inputVal: ''})
     }
@@ -49,21 +101,9 @@ export default class Home extends React.Component{
 
 
     render(){
-        let locDiv
-        if (this.state.location){
-            const { lat, lng } = this.state.location
-            locDiv = <div>
-                My location is {lat}, {lng}
-            </div>
-        }
-        else {
-            locDiv = <div></div>
-        }
-        
+        console.log(this.state.pins)
         return (
             <div>
-                {locDiv}
-                {/* <input placeholder="find address" onSubmit={this.handleAddressInput}></input><button type="submit"/> */}
                 <form onSubmit={this.handleAddressInput}>
                         <label>
                             Find By Address
@@ -71,9 +111,8 @@ export default class Home extends React.Component{
                         </label>
                     <input type="submit" value="Submit" />
                 </form>
-                <Map center={this.state.address ? this.state.address.data.results[0].geometry.location : this.state.location} />
-            </div>
-            
+                <Map state={this.state} pins={this.state.pins} center={this.state.address ? this.state.address.data.results[0].geometry.location : this.state.myLocation} />
+            </div>       
         )
     }
 }
