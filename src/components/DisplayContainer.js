@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import blueMapPin from '../blueMapPin.png'
+import flippy from '../flippy.gif'
 
-export default function DisplayContainer({text}){
+export default function DisplayContainer({text, name}){
     const [hovered, setHovered] = useState(false)
     const [popUp, setPopup] = useState(false)
 
@@ -23,7 +24,7 @@ export default function DisplayContainer({text}){
             <div>
                 <img 
                 style={{width: '30px', height: '40px'}} 
-                src={blueMapPin} 
+                src={blueMapPin}
                 alt="blue map pin"
                 />{text}
             </div>
@@ -31,7 +32,7 @@ export default function DisplayContainer({text}){
             <div>
                 <img 
                 style={{width: '20px', height: '25px'}} 
-                src={blueMapPin} 
+                src={blueMapPin}
                 alt="blue map pin"
                 />{text}
             </div>
