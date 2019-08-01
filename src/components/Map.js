@@ -10,7 +10,8 @@ class Map extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      campgrounds: []
+      campgrounds: [],
+      hikes: []
     }
   }
 
@@ -19,23 +20,49 @@ class Map extends React.Component {
     const newProps = this.props
     if (oldProps.myLocation !== newProps.myLocation){
       this.getCampgrounds(newProps.myLocation.lat, newProps.myLocation.lng)
+      this.getTrails(newProps.myLocation.lat, newProps.myLocation.lng)
     } else if (oldProps.center !== newProps.center){
       this.getCampgrounds(newProps.center.lat, newProps.center.lng)
+      this.getTrails(newProps.center.lat, newProps.center.lng)
     }
   }
   
   async getCampgrounds(lat, lng){
-    // console.log(this.props)
-    const { data } = await axios.get(`https://www.hikingproject.com/data/get-campgrounds?lat=${lat}&lon=${lng}&maxResults=500&maxDistance=200&key=${hikingProjectKey}`)
-    const { campgrounds } = data
-    this.setState({campgrounds})
+    try{
+      const { data } = await axios.get(`https://www.hikingproject.com/data/get-campgrounds?lat=${lat}&lon=${lng}&maxResults=500&maxDistance=200&key=${hikingProjectKey}`)
+      const campgrounds = data.campgrounds.filter(c => {return c.isCampground && c.numCampsites > 0})
+      const formattedCampgrounds = campgrounds.map(c => {
+        const { name, location, latitude, longitude, isBookable, isCampground, url, numCampsites } = c
+        return {name, location, latitude, longitude, isBookable, isCampground, url, numCampsites}
+      })
+      const camps = await axios.post('http://localhost:3001/camps', formattedCampgrounds)
+      this.setState({campgrounds: [...this.state.campgrounds, ...camps.data]})
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+  async getTrails(lat, lng){
+    try{
+      const { data } = await axios.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lng}&maxResults=100&minStars=3&maxDistance=100&key=${hikingProjectKey}`)
+      const formattedHikes = data.trails.map(t => {
+        const { ascent, conditionDetails, conditionStatus, descent, difficulty, high, imgMedium, latitude,
+          length, location, longitude, low, name, summary, url} = t
+          return { ascent, conditionDetails, conditionStatus, descent, difficulty, high, imgMedium, latitude,
+            length, location, longitude, low, name, summary, url}
+      }) 
+      const hikes = await axios.post('http://localhost:3001/hikes', formattedHikes)
+      this.setState({hikes: [...this.state.hikes, ...hikes.data]})
+    } catch(error){
+      console.log(error)
+    }
   }
 
   render() {
-    console.log(this.props)
+    console.log(this.state.hikes)
     const { lat, lng, name } = this.props.center.lat && this.props.center.lng ? this.props.center : (this.props.pins[0] ? this.props.pins[0] : {lat: null, lng: null})
     return (
-      <div style={{ height: '50vh', width: '50%' }}>
+      <div style={{ height: '75vh', width: '75%', alignSelf: 'center' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: mapsKey}}
           center={{lat, lng}}
@@ -46,6 +73,7 @@ class Map extends React.Component {
             lat={lat}
             lng={lng}
             text={name ? name : "Current Location"}
+            type='current'
           />
           {this.props.pins.length && this.props.pins.map((p, i)=> {
             return (
@@ -55,9 +83,22 @@ class Map extends React.Component {
             lng={p.lng}
             text={p.name}
             name={p.name ? p.name : ''}
+            type='pin'
           />
           )
         })}
+          {this.state.hikes.length && this.state.hikes.map((h, i) => {
+            return (
+              <DisplayContainer
+              key={i}
+              lat={h.latitude}
+              lng={h.longitude}
+              text={h.name}
+              type='hike'
+              area={h}
+              />
+            )
+          })}
           {this.state.campgrounds.length && this.state.campgrounds.map((c, i) => {
             return (
               <DisplayContainer 
@@ -65,6 +106,8 @@ class Map extends React.Component {
               lat={c.latitude}
               lng={c.longitude}
               text={c.name}
+              type='camp'
+              area={c}
               />
             )
           })}

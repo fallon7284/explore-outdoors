@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { mapsKey, hikingProjectKey } from '../secrets'
+import { mapsKey } from '../secrets'
 import Map from './Map'
 
 
@@ -14,7 +14,9 @@ export default class Home extends React.Component{
             myLocation: {lat: null, lng: null},
             pins: [],
             campgrounds: [],
-            zoom: 9
+            zoom: 9,
+            findHikes: true,
+            findCamps: false,
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleAddressInput = this.handleAddressInput.bind(this)
@@ -77,7 +79,6 @@ export default class Home extends React.Component{
 
 
     render(){
-        console.log(this.state.myLocation)
         return (
             <div>
                 <form onSubmit={this.handleAddressInput}>
@@ -88,8 +89,7 @@ export default class Home extends React.Component{
                     <input type="submit" value="Submit" />
                 </form>
                 <Map 
-                zoom={this.state.zoom} 
-                // campgrounds={this.state.campgrounds} 
+                zoom={this.state.zoom}
                 pins={this.state.pins} 
                 center={this.state.address ? this.state.address : this.state.myLocation} 
                 myLocation={this.state.myLocation}
