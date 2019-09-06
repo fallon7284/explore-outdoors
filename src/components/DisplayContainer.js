@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import blueMapPin from '../blueMapPin.png'
-import redPin from '../redpin.png'
-import campPin from '../camp.png'
-import hiker from '../hiker.jpg'
+import blueMapPin from '../images/blueMapPin.png'
+import redPin from '../images/redpin.png'
+import campPin from '../images/camp.png'
+import hiker from '../images/hiker.jpg'
 import DetailCard from './DetailCard'
+import climber from '../images/climb.png'
 
 export default function DisplayContainer(props){
     const [hovered, setHovered] = useState(false)
@@ -34,6 +35,9 @@ export default function DisplayContainer(props){
             break
         case 'hike': 
             src = hiker
+            break
+        case 'hike': 
+            src = climber
             break
         default:
             src = blueMapPin

@@ -5,15 +5,15 @@ export default ({name, backgroundColor, callback}) => {
     return (
         <div 
             style={{
-                backgroundColor,
+                color: 'white',
                 fontFamily: 'futura',
                 cursor: 'pointer',
-                width: '100%', 
-                height: '8vh', 
+                width: '95%', 
+                height: '12vh', 
                 display: 'flex',
                 flexDirection: "column",
                 justifyContent: 'space-around',
-                marginTop: '2px'}} 
+                marginTop: '3px'}} 
             onClick={callback}
         >
             {name}

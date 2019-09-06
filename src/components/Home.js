@@ -21,6 +21,7 @@ export default class Home extends React.Component{
             filter: {
                 hikes: true,
                 camps: true,
+                boulders: true,
                 pins: true
               }
         }
@@ -89,7 +90,7 @@ export default class Home extends React.Component{
 
     render(){
         return (
-            <div >
+            <div className="background">
                 <SideBar 
                     toggleFilters={this.toggleFilters.bind(this)} 
                     handleAddressInput={this.handleAddressInput.bind(this)}
