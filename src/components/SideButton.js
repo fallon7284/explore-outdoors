@@ -1,32 +1,23 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-export default ({toggleFilters, name, backgroundColor}) => {
-    backgroundColor = backgroundColor ? backgroundColor : 'green'
-    const [clicked, setClicked] = useState(false)
-    const opacity = clicked ? .5 : 1
-    const [onOff, setOnOff] = useState(true)
-    const seeOrHide = onOff ? 'Hide' : 'See'
+export default ({name, backgroundColor, callback}) => {
+    backgroundColor = backgroundColor ? backgroundColor : 'rgb(200, 200, 200)'
     return (
-        <div
-            onClick={() => {
-                setClicked(!clicked)
-                setOnOff(!onOff)
-                toggleFilters(name)
-            }}
-            className="side-button"
+        <div 
             style={{
-                cursor: 'pointer', 
-                backgroundColor, 
+                backgroundColor,
+                fontFamily: 'futura',
+                cursor: 'pointer',
                 width: '100%', 
                 height: '8vh', 
                 display: 'flex',
                 flexDirection: "column",
                 justifyContent: 'space-around',
-                marginTop: '2px',
-                opacity
-                }} 
+                marginTop: '2px'}} 
+            onClick={callback}
         >
-            {`${seeOrHide} ${name}`}
+            {name}
         </div>
+        
     )
 }

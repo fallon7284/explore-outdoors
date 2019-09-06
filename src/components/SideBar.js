@@ -1,5 +1,7 @@
 import React from 'react'
-import SideButton from './SideButton';
+import ToggleCategoryButton from './ToggleCategoryButton';
+import SideButton from './SideButton'
+import LocationButton from './LocationButton'
 
 
 export default class SideBar extends React.Component{
@@ -10,10 +12,10 @@ export default class SideBar extends React.Component{
     render(){
         return (
             <div className="side-bar">
-                <SideButton toggleFilters={this.props.toggleFilters} name="Hikes" backgroundColor="red"/>
-                <SideButton toggleFilters={this.props.toggleFilters} name="Camps"/>
-                <SideButton toggleFilters={this.props.toggleFilters} name="Pins"/>
-                <SideButton toggleFilters={this.props.toggleFilters} name="button4"/>
+                <ToggleCategoryButton toggleFilters={this.props.toggleFilters} name="Hikes"/>
+                <ToggleCategoryButton toggleFilters={this.props.toggleFilters} name="Camps"/>
+                <ToggleCategoryButton toggleFilters={this.props.toggleFilters} name="Pins"/>
+                <LocationButton callback={this.props.handleAddressInput} name="Set Location"/>
             </div>
         )
     }

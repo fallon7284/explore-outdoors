@@ -77,9 +77,8 @@ export default class Home extends React.Component{
     }
 
 
-    handleAddressInput(e){
-        e.preventDefault()
-        this.setCustomLocation(this.state.inputVal)
+    handleAddressInput(inputVal){
+        this.setCustomLocation(inputVal)
         this.setState({inputVal: ''})
     }
 
@@ -91,14 +90,10 @@ export default class Home extends React.Component{
     render(){
         return (
             <div >
-                <SideBar toggleFilters={this.toggleFilters.bind(this)}/>
-                <form onSubmit={this.handleAddressInput}>
-                    <label>
-                        Find By Address
-                        <input type="text" value={this.state.inputVal} onChange={this.handleChange}/>
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form>
+                <SideBar 
+                    toggleFilters={this.toggleFilters.bind(this)} 
+                    handleAddressInput={this.handleAddressInput.bind(this)}
+                />
                 <div className="map-section">
                     <Map 
                     className="map"

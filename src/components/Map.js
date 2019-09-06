@@ -30,7 +30,7 @@ class Map extends React.Component {
   async getCampgrounds(lat, lng){
     console.log('get camps')
     try{
-      const { data } = await axios.get(`https://www.hikingproject.com/data/get-campgrounds?lat=${lat}&lon=${lng}&maxResults=200&maxDistance=50&key=${hikingProjectKey}`)
+      const { data } = await axios.get(`https://www.hikingproject.com/data/get-campgrounds?lat=${lat}&lon=${lng}&maxResults=200&maxDistance=200&key=${hikingProjectKey}`)
       console.log(data)
       const campgrounds = data.campgrounds.filter(c => {return c.isCampground && c.numCampsites > 0})
       const formattedCampgrounds = campgrounds.map(c => {
@@ -47,7 +47,7 @@ class Map extends React.Component {
   async getTrails(lat, lng){
     console.log('get trails')
     try{
-      const { data } = await axios.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lng}&maxResults=100&minStars=3&maxDistance=100&key=${hikingProjectKey}`)
+      const { data } = await axios.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lng}&maxResults=100&minStars=4&minLength=4&maxDistance=100&key=${hikingProjectKey}`)
       const formattedHikes = data.trails.map(t => {
         const { ascent, conditionDetails, conditionStatus, descent, difficulty, high, imgMedium, latitude,
           length, location, longitude, low, name, summary, url} = t

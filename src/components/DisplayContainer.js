@@ -41,7 +41,7 @@ export default function DisplayContainer(props){
     }
 
     return (
-        <div style={{width: '30px', height: '40px'}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} onClick={handleClick}>
+        <div style={{width: '30px', height: '40px', zIndex: '3'}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} onClick={handleClick}>
            { popUp ? <DetailCard type={props.type} area={props.area} handleClick={handleClick} />: (
                 hovered ? 
             <div>
