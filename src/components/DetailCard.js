@@ -43,7 +43,7 @@ export default function DetailCard(props){
         }    
     }
     return (
-        <div style={{backgroundColor: '#303030', borderRadius: '15%', height: '18em', width: '18em', color: 'white', fontSize: '14px', zIndex: 2}}>
+        <div style={{backgroundColor: '#303030', borderTopLeftRadius: '10%', borderTopRightRadius: '10%', height: '18em', width: '18em', color: 'white', fontSize: '14px', zIndex: 2}}>
             {content}
         </div>
     )

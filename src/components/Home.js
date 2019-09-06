@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { mapsKey } from '../secrets'
 import Map from './Map'
+import SideBar from './SideBar'
 
 
 
@@ -17,6 +18,11 @@ export default class Home extends React.Component{
             zoom: 9,
             findHikes: true,
             findCamps: false,
+            filter: {
+                hikes: true,
+                camps: true,
+                pins: true
+              }
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleAddressInput = this.handleAddressInput.bind(this)
@@ -26,6 +32,11 @@ export default class Home extends React.Component{
     async componentDidMount(){
         this.getPinsFromDatabase()
         this.getLocation()
+    }
+
+    toggleFilters(name){
+        name = name.toLowerCase()
+        this.setState({filter: {...this.state.filter, [name]: !this.state.filter[name]}})
     }
 
 
@@ -39,13 +50,12 @@ export default class Home extends React.Component{
         if (add.length){
             add = add.split(' ').join('+')
             const data = await axios.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${add}&key=${mapsKey}`)
-            console.log(data.data.results)
             if(data.data.results.length){
                 const { lat, lng } = data.data.results[0].geometry.location
                 const { formatted_address } = data.data.results[0]
                 const address = {lat, lng, name: add.split('+').join(' '), formatted_address}
                 try{
-                    const pins = await axios.post('http://localhost:3001/pins', address)
+                    const pins = await axios.post('http://explore-outdoors-backend.herokuapp.com/pins', address)
                     this.setState({address: pins.data})
                     this.setState({pins: [...this.state.pins, pins.data]})
                 } catch(error){
@@ -58,7 +68,7 @@ export default class Home extends React.Component{
 
     async getPinsFromDatabase(){
         try{
-            const response = await axios.get('http://localhost:3001/pins')
+            const response = await axios.get('http://explore-outdoors-backend.herokuapp.com/pins')
             const pins = response.data
             this.setState({pins: [...this.state.pins, ...pins]})
         } catch(error){
@@ -80,20 +90,25 @@ export default class Home extends React.Component{
 
     render(){
         return (
-            <div>
+            <div >
+                <SideBar toggleFilters={this.toggleFilters.bind(this)}/>
                 <form onSubmit={this.handleAddressInput}>
-                        <label>
-                            Find By Address
-                            <input type="text" value={this.state.inputVal} onChange={this.handleChange}/>
-                        </label>
+                    <label>
+                        Find By Address
+                        <input type="text" value={this.state.inputVal} onChange={this.handleChange}/>
+                    </label>
                     <input type="submit" value="Submit" />
                 </form>
-                <Map 
-                zoom={this.state.zoom}
-                pins={this.state.pins} 
-                center={this.state.address ? this.state.address : this.state.myLocation} 
-                myLocation={this.state.myLocation}
-                />
+                <div className="map-section">
+                    <Map 
+                    className="map"
+                    zoom={this.state.zoom}
+                    pins={this.state.pins} 
+                    center={this.state.address ? this.state.address : this.state.myLocation} 
+                    myLocation={this.state.myLocation}
+                    filter={this.state.filter}
+                    />
+                </div>
             </div>       
         )
     }

@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: row;
 }
 
 .App-logo {
@@ -21,6 +23,24 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.side-bar{
+  position: fixed;
+  background-color: bisque;
+  height: 100%;
+  width: 12vw;
+}
+
+.map-section{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-bottom: 15%;
+  height: 100%;
+  width: 88vw;
+  left: 12vw;
 }
 
 .welcome{
