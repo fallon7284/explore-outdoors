@@ -35,6 +35,10 @@
   align-items: center;
 }
 
+.list-item{
+  height: 7vh;
+}
+
 .map-section{
   position: fixed;
   display: flex;
