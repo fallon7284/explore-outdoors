@@ -31,50 +31,47 @@ class Map extends React.Component {
   }
   
   async getCampgrounds(lat, lng){
-    console.log('get camps')
     try{
-      const { data } = await axios.get(`https://www.hikingproject.com/data/get-campgrounds?lat=${lat}&lon=${lng}&maxResults=200&maxDistance=200&key=${hikingProjectKey}`)
+      const { data } = await axios.get(`https://www.hikingproject.com/data/get-campgrounds?lat=${lat}&lon=${lng}&maxResults=50&maxDistance=50&key=${hikingProjectKey}`)
       console.log(data)
       const campgrounds = data.campgrounds.filter(c => {return c.isCampground && c.numCampsites > 0})
       const formattedCampgrounds = campgrounds.map(c => {
-        const { name, location, latitude, longitude, isBookable, isCampground, url, numCampsites } = c
-        return {name, location, latitude, longitude, isBookable, isCampground, url, numCampsites}
+        const { imgUrl, name, location, latitude, longitude, isBookable, isCampground, url, numCampsites } = c
+        return { imgUrl, name, location, latitude, longitude, isBookable, isCampground, url, numCampsites}
       })
-      // const camps = await axios.post('http://explore-outdoors-backend.herokuapp.com/camps', formattedCampgrounds)
-      // this.setState({campgrounds: [...this.state.campgrounds, ...camps.data]})
+      const camps = await axios.post('http://explore-outdoors-backend.herokuapp.com/camps', formattedCampgrounds)
+      this.setState({campgrounds: [...this.state.campgrounds, ...camps.data]})
     }catch(error){
       console.log(error)
     }
   }
 
   async getTrails(lat, lng){
-    console.log('get trails')
     try{
-      const { data } = await axios.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lng}&maxResults=100&minStars=4&minLength=4&maxDistance=100&key=${hikingProjectKey}`)
+      const { data } = await axios.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lng}&maxResults=75&minStars=4&minLength=5&maxDistance=50&key=${hikingProjectKey}`)
       const formattedHikes = data.trails.map(t => {
         const { ascent, conditionDetails, conditionStatus, descent, difficulty, high, imgMedium, latitude,
           length, location, longitude, low, name, summary, url} = t
           return { ascent, conditionDetails, conditionStatus, descent, difficulty, high, imgMedium, latitude,
             length, location, longitude, low, name, summary, url}
       }) 
-      // const hikes = await axios.post('http://explore-outdoors-backend.herokuapp.com/hikes', formattedHikes)
-      // this.setState({hikes: [...this.state.hikes, ...hikes.data]})
+      const hikes = await axios.post('http://explore-outdoors-backend.herokuapp.com/hikes', formattedHikes)
+      this.setState({hikes: [...this.state.hikes, ...hikes.data]})
     } catch(error){
       console.log(error)
     }
   }
 
-  async getBoulders(lat, lng, maxV = 10, minV = 0){
-    console.log('get trails')
+  async getBoulders(lat, lng, maxV = 4, minV = 0){
     try{
       const { data } = await axios.get(`https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=${lat}&lon=${lng}&maxDistance=50&minDiff=V${minV}&maxDiff=V${maxV}&key=${mountainProjectKey}`)
       const formattedBoulders = data.routes.map(t => {
-        const { id, name, type, rating, stars, starVotes, pitches, location,
+        const { name, rating, stars, location,
           latitude, longitude, imgSmall, imgMedium, url} = t
-          return { id, name, type, rating, stars, starVotes, pitches, location,
+          return { name, rating, stars, location,
             latitude, longitude, imgSmall, imgMedium, url}
       }) 
-      const boulders = await axios.post('http://explore-outdoors-backend.herokuapp.com/hikes', formattedBoulders)
+      const boulders = await axios.post('http://explore-outdoors-backend.herokuapp.com/boulders', formattedBoulders)
       this.setState({boulders: [...this.state.boulders, ...boulders.data]})
     } catch(error){
       console.log(error)
@@ -83,7 +80,6 @@ class Map extends React.Component {
 
   render() {
     const { lat, lng, name } = this.props.center.lat && this.props.center.lng ? this.props.center : (this.props.pins[0] ? this.props.pins[0] : {lat: null, lng: null})
-    console.log(this.state.campgrounds)
     return (
       <div style={{ height: '50vh', width: '50%', alignSelf: 'center' }}>
         <GoogleMapReact
@@ -141,7 +137,7 @@ class Map extends React.Component {
               lat={c.latitude}
               lng={c.longitude}
               text={c.name}
-              type='camp'
+              type='boulder'
               area={c}
               />
             )

@@ -2,7 +2,6 @@ import React from 'react'
 
 export default function DetailCard(props){
     let content
-    console.log(props)
     switch(props.type){
         case 'camp':{
             content = <div style={{opacity: 1}}>
@@ -12,6 +11,7 @@ export default function DetailCard(props){
             <div>
                 {`This campground in ${props.area.location} has ${props.area.numCampsites} campsites available for reservation.`}
                 {props.area.url && <a href={props.area.url} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'white'}}>VISIT THIS CAMPSITE ONLINE</a>}
+                <img style={{height: '100%', width: '100%', opacity: 1}} src={props.area.imgUrl} alt=''></img>
             </div>
             </div>
             break
@@ -35,6 +35,19 @@ export default function DetailCard(props){
             </div>
             break
         }
+        case 'boulder':{
+            content = <div style={{opacity: 1}}>
+            <div>
+            {props.area.name}
+            </div>
+            <div>
+                {`This boulder in ${props.area.location[0]} is a ${props.area.rating} with a ${props.area.stars} star rating.`}
+                {props.area.url && <a href={props.area.url} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'white'}}>See this boulder online</a>}
+                <img style={{height: '100%', width: '100%', opacity: 1}} src={props.area.imgMedium} alt=''></img>
+            </div>
+            </div>
+            break
+    }
         default: {
             content = <div>
                 current location

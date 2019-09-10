@@ -36,7 +36,7 @@ export default function DisplayContainer(props){
         case 'hike': 
             src = hiker
             break
-        case 'hike': 
+        case 'boulder': 
             src = climber
             break
         default:

@@ -2,9 +2,7 @@ import React from 'react';
 import './App.css';
 import Home from './components/Home'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { Drawer } from '@material-ui/core'
 import WelcomeScreen from '../src/components/WelcomeScreen'
-import SideBar from './components/SideBar';
 
 function App() {
   return (

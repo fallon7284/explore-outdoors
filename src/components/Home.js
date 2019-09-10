@@ -18,6 +18,7 @@ export default class Home extends React.Component{
             zoom: 9,
             findHikes: true,
             findCamps: false,
+            mapView: true,
             filter: {
                 hikes: true,
                 camps: true,
@@ -33,6 +34,11 @@ export default class Home extends React.Component{
     async componentDidMount(){
         this.getPinsFromDatabase()
         this.getLocation()
+    }
+
+    toggleMapView(){
+        this.setState({mapView: !this.state.mapView})
+        console.log('from top level')
     }
 
     toggleFilters(name){
@@ -94,16 +100,19 @@ export default class Home extends React.Component{
                 <SideBar 
                     toggleFilters={this.toggleFilters.bind(this)} 
                     handleAddressInput={this.handleAddressInput.bind(this)}
+                    toggleMapView={this.toggleMapView.bind(this)}
+                    mapView={this.state.mapView}
                 />
                 <div className="map-section">
-                    <Map 
+                    {this.state.mapView ? <Map 
                     className="map"
                     zoom={this.state.zoom}
                     pins={this.state.pins} 
                     center={this.state.address ? this.state.address : this.state.myLocation} 
                     myLocation={this.state.myLocation}
                     filter={this.state.filter}
-                    />
+                    /> 
+                    : <div >This is the list view</div>}
                 </div>
             </div>       
         )
