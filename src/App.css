@@ -35,8 +35,18 @@
   align-items: center;
 }
 
+.list-page{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 .list-item{
-  height: 7vh;
+  height: 12vh;
+}
+
+.list-section{
+  width: 30%;
 }
 
 .map-section{

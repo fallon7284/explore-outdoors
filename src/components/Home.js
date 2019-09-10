@@ -103,18 +103,15 @@ export default class Home extends React.Component{
                     mapView={this.state.mapView}
                 />
                 <div className="map-section">
-                    {this.state.mapView ? <Map 
+                    <Map 
                     className="map"
                     zoom={this.state.zoom}
                     pins={this.state.pins} 
                     center={this.state.address ? this.state.address : this.state.myLocation} 
                     myLocation={this.state.myLocation}
                     filter={this.state.filter}
+                    mapView={this.state.mapView}
                     /> 
-                    : <List 
-                        boulders={this.state.boulders} 
-                        camps={this.state.camps}
-                        hikes={this.state.hikes}/>}
                 </div>
             </div>       
         )
