@@ -111,7 +111,10 @@ export default class Home extends React.Component{
                     myLocation={this.state.myLocation}
                     filter={this.state.filter}
                     /> 
-                    : <div >This is the list view</div>}
+                    : <List 
+                        boulders={this.state.boulders} 
+                        camps={this.state.camps}
+                        hikes={this.state.hikes}/>}
                 </div>
             </div>       
         )
