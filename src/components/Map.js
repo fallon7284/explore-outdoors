@@ -3,6 +3,7 @@ import GoogleMapReact from 'google-map-react'
 import { mapsKey, hikingProjectKey, mountainProjectKey } from '../secrets'
 import DisplayContainer from './DisplayContainer'
 import axios from 'axios'
+import List from './List'
  
 
  
@@ -12,7 +13,8 @@ class Map extends React.Component {
     this.state = {
       campgrounds: [],
       hikes: [],
-      boulders: []
+      boulders: [],
+      mapView: true,
     }
   }
 
@@ -80,8 +82,10 @@ class Map extends React.Component {
 
   render() {
     const { lat, lng, name } = this.props.center.lat && this.props.center.lng ? this.props.center : (this.props.pins[0] ? this.props.pins[0] : {lat: null, lng: null})
+    console.log(this.props.mapView)
     return (
-      <div style={{ height: '50vh', width: '50%', alignSelf: 'center' }}>
+      <div>
+        {this.props.mapView ? <div style={{ height: '50vh', width: '50%', alignSelf: 'center' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: mapsKey}}
           center={{lat, lng}}
@@ -143,6 +147,14 @@ class Map extends React.Component {
             )
           })}
         </GoogleMapReact>
+        </div>
+        : <div style={{backgroundColor: 'white'}}>LIST VIEW
+        <List 
+          camps={this.state.campgrounds} 
+          hikes={this.state.hikes} 
+          boulders={this.state.boulders}/>
+        </div>
+        }
       </div>
     );
   }
