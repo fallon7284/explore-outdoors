@@ -38,7 +38,6 @@ export default class Home extends React.Component{
 
     toggleMapView(){
         this.setState({mapView: !this.state.mapView})
-        console.log('from top level')
     }
 
     toggleFilters(name){
