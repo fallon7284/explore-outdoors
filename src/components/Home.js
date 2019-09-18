@@ -3,6 +3,8 @@ import axios from 'axios'
 import { mapsKey } from '../secrets'
 import Map from './Map'
 import SideBar from './SideBar'
+import FullPage from './FullPage'
+
 
 
 
@@ -19,6 +21,7 @@ export default class Home extends React.Component{
             findHikes: true,
             findCamps: false,
             mapView: true,
+            selectedItem: null,
             filter: {
                 hikes: true,
                 camps: true,
@@ -29,15 +32,22 @@ export default class Home extends React.Component{
         this.handleChange = this.handleChange.bind(this)
         this.handleAddressInput = this.handleAddressInput.bind(this)
         this.getPinsFromDatabase = this.getPinsFromDatabase.bind(this)
+        this.toggleFullPage = this.toggleFullPage.bind(this)
     }
 
     async componentDidMount(){
-        // this.getPinsFromDatabase()
         this.getLocation()
     }
 
     toggleMapView(){
         this.setState({mapView: !this.state.mapView})
+    }
+
+    toggleFullPage(selectedItem = null, type){
+        if (selectedItem){
+            selectedItem.type = type
+        }
+        this.setState({selectedItem})
     }
 
     toggleFilters(name){
@@ -48,7 +58,6 @@ export default class Home extends React.Component{
 
     async getLocation(){
         const myLocation = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${mapsKey}`)
-        console.log("CALLING LOCATION API", myLocation)
         this.setState({myLocation: myLocation.data.location})
     }
 
@@ -58,13 +67,11 @@ export default class Home extends React.Component{
             const data = await axios.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${add}&key=${mapsKey}`)
             if(data.data.results.length){
                 const { lat, lng } = data.data.results[0].geometry.location
-                const { formatted_address } = data.data.results[0]
-                const address = {lat, lng, name: add.split('+').join(' '), formatted_address}
+                // const { formatted_address } = data.data.results[0]
+                // const address = {lat, lng, name: add.split('+').join(' '), formatted_address}
                 try{
                     // const pins = await axios.post('http://explore-outdoors-backend.herokuapp.com/pins', address)
                     this.setState({myLocation: { lat, lng }})
-                    // this.setState({address: pins.data})
-                    // this.setState({pins: [...this.state.pins, pins.data]})
                 } catch(error){
                     console.log(error)
                 }
@@ -114,8 +121,10 @@ export default class Home extends React.Component{
                         myLocation={this.state.myLocation}
                         filter={this.state.filter}
                         mapView={this.state.mapView}
+                        toggleFullPage={this.toggleFullPage}
                     /> 
                 </div>
+                {this.state.selectedItem && <FullPage onClick={this.toggleFullPage} area={this.state.selectedItem} />}
             </div>       
         )
     }

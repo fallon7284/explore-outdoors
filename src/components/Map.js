@@ -61,7 +61,6 @@ class Map extends React.Component {
 
   render() {
     const { lat, lng, name } = this.props.center.lat && this.props.center.lng ? this.props.center : (this.props.pins[0] ? this.props.pins[0] : {lat: null, lng: null})
-    console.log('lat:', lat, 'lon:', lng)
     return (
       <div className="map-section" >
         <div >
@@ -87,6 +86,7 @@ class Map extends React.Component {
                 lng={p.lng}
                 text={p.name}
                 name={p.name ? p.name : ''}
+                toggleFullPage={this.props.toggleFullPage}
                 type='pin'
               />
               )
@@ -98,6 +98,7 @@ class Map extends React.Component {
                   lat={h.latitude}
                   lng={h.longitude}
                   text={h.name}
+                  toggleFullPage={this.props.toggleFullPage}
                   type='hike'
                   area={h}
                   />
@@ -110,6 +111,7 @@ class Map extends React.Component {
                   lat={c.latitude}
                   lng={c.longitude}
                   text={c.name}
+                  toggleFullPage={this.props.toggleFullPage}
                   type='camp'
                   area={c}
                   />
@@ -122,6 +124,7 @@ class Map extends React.Component {
                   lat={c.latitude}
                   lng={c.longitude}
                   text={c.name}
+                  toggleFullPage={this.props.toggleFullPage}
                   type='boulder'
                   area={c}
                   />
