@@ -10,7 +10,6 @@ export default ({name, callback}) => {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(inputVal)
         callback(inputVal)
     }
     return (
