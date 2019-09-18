@@ -25,6 +25,11 @@
   color: #61dafb;
 }
 
+.app-body{
+  display: flex;
+  flex-direction: row;
+}
+
 .side-bar{
   position: fixed;
   background-color: rgb(21, 104, 0);
@@ -35,18 +40,86 @@
   align-items: center;
 }
 
+.map-page{
+  left: 12vw;
+  width: 88vw;
+  height: 100%;
+  border: 5px black;
+}
+
 .list-page{
+  z-index: 9999;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 88vw;
+  left: 12vw;
+}
+.list-page-body{
+  top: 15vh;
+  position: fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  width: 88vw;
+  left: 0%;
+}
+
+
+.list-title-bar{
+  background-color: #707070;
+  color: white;
+  font-size: 2em;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 15vh;
+  width: 88vw;
+  left: 12vw;
+  top: 0%;
+  position: fixed;
+}
+
+
+.list-title{
+  height: 15vh;
+  width: 30%;
+  background-color: #707070;
 }
 
 .list-item{
+  margin: 5px;
   height: 12vh;
+  background-color: #707070;
 }
 
 .list-section{
+  top: 15vh;
+  position: fixed;
+  /* display: inline-block; */
   width: 30%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.list-page{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-bottom: 15%;
+  height: 100%;
+  background-image: url('../src/images/swissCheeseCoyote.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.map-body{
+  position: fixed;
+  z-index: 1;
 }
 
 .map-section{

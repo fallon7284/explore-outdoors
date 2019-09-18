@@ -32,7 +32,7 @@ export default class Home extends React.Component{
     }
 
     async componentDidMount(){
-        this.getPinsFromDatabase()
+        // this.getPinsFromDatabase()
         this.getLocation()
     }
 
@@ -61,9 +61,10 @@ export default class Home extends React.Component{
                 const { formatted_address } = data.data.results[0]
                 const address = {lat, lng, name: add.split('+').join(' '), formatted_address}
                 try{
-                    const pins = await axios.post('http://explore-outdoors-backend.herokuapp.com/pins', address)
-                    this.setState({address: pins.data})
-                    this.setState({pins: [...this.state.pins, pins.data]})
+                    // const pins = await axios.post('http://explore-outdoors-backend.herokuapp.com/pins', address)
+                    this.setState({myLocation: { lat, lng }})
+                    // this.setState({address: pins.data})
+                    // this.setState({pins: [...this.state.pins, pins.data]})
                 } catch(error){
                     console.log(error)
                 }
@@ -95,22 +96,24 @@ export default class Home extends React.Component{
 
     render(){
         return (
-            <div className="background">
-                <SideBar 
-                    toggleFilters={this.toggleFilters.bind(this)} 
-                    handleAddressInput={this.handleAddressInput.bind(this)}
-                    toggleMapView={this.toggleMapView.bind(this)}
-                    mapView={this.state.mapView}
-                />
-                <div className="map-section">
+            <div className="app-body">
+                <div>
+                    <SideBar 
+                        toggleFilters={this.toggleFilters.bind(this)} 
+                        handleAddressInput={this.handleAddressInput.bind(this)}
+                        toggleMapView={this.toggleMapView.bind(this)}
+                        mapView={this.state.mapView}
+                    />
+                </div>
+                <div>
                     <Map 
-                    className="map"
-                    zoom={this.state.zoom}
-                    pins={this.state.pins} 
-                    center={this.state.address ? this.state.address : this.state.myLocation} 
-                    myLocation={this.state.myLocation}
-                    filter={this.state.filter}
-                    mapView={this.state.mapView}
+                        className="map"
+                        zoom={this.state.zoom}
+                        pins={this.state.pins} 
+                        center={this.state.address ? this.state.address : this.state.myLocation} 
+                        myLocation={this.state.myLocation}
+                        filter={this.state.filter}
+                        mapView={this.state.mapView}
                     /> 
                 </div>
             </div>       
