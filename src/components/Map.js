@@ -62,15 +62,14 @@ class Map extends React.Component {
   render() {
     const { lat, lng, name } = this.props.center.lat && this.props.center.lng ? this.props.center : (this.props.pins[0] ? this.props.pins[0] : {lat: null, lng: null})
     return (
-      <div className="map-section" >
-        <div >
-            <div style={{height: '50vh', width: '50%', alignSelf: 'center'}}>
+      <div>
+        <div style={{position: 'fixed', left: '12vw'}}>
+            <div style={{position: 'fixed', height: this.props.height, width: '100%', alignSelf: 'center'}}>
             <GoogleMapReact
               bootstrapURLKeys={{ key: mapsKey}}
               center={{lat, lng}}
               defaultCenter={{lat: 0, lng: 0}}
               defaultZoom={this.props.zoom}
-              style={{border: '3px brown'}}
             >
               <DisplayContainer
                 lat={lat}
@@ -84,6 +83,8 @@ class Map extends React.Component {
                 key={i}
                 lat={p.lat}
                 lng={p.lng}
+                locLat={lat}
+                locLng={lng}
                 text={p.name}
                 name={p.name ? p.name : ''}
                 toggleFullPage={this.props.toggleFullPage}
@@ -97,6 +98,8 @@ class Map extends React.Component {
                   key={i}
                   lat={h.latitude}
                   lng={h.longitude}
+                  locLat={lat}
+                  locLng={lng}
                   text={h.name}
                   toggleFullPage={this.props.toggleFullPage}
                   type='hike'
@@ -110,6 +113,8 @@ class Map extends React.Component {
                   key={i}
                   lat={c.latitude}
                   lng={c.longitude}
+                  locLat={lat}
+                  locLng={lng}
                   text={c.name}
                   toggleFullPage={this.props.toggleFullPage}
                   type='camp'
@@ -122,6 +127,8 @@ class Map extends React.Component {
                   <DisplayContainer 
                   key={i}
                   lat={c.latitude}
+                  locLat={lat}
+                  locLng={lng}
                   lng={c.longitude}
                   text={c.name}
                   toggleFullPage={this.props.toggleFullPage}
@@ -135,12 +142,14 @@ class Map extends React.Component {
             {!this.props.mapView && 
             <div>
             <List 
+            height={this.props.height}
+            toggleFullPage={this.props.toggleFullPage}
             camps={this.state.campgrounds} 
             hikes={this.state.hikes} 
             boulders={this.state.boulders}/>
 
 
-            <div style={{position: 'fixed', width: '100%', display: 'flex', height: '100vh', justifyContent: 'space-evenly', backgroundColor: 'white', zIndex: 9999, top: 0}}>
+            {/* <div style={{position: 'fixed', width: '100%', display: 'flex', height: '100vh', justifyContent: 'space-evenly', backgroundColor: 'white', zIndex: 9999, top: 0}}>
               <div style={{flexGrow: '1'}}>
                 Camps
               </div>
@@ -150,7 +159,7 @@ class Map extends React.Component {
               <div style={{flexGrow: '1'}}>
                 Boulders
               </div>
-            </div>
+            </div> */}
 
             </div>
 

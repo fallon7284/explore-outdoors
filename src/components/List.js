@@ -3,9 +3,9 @@ import BoulderListItem from './BoulderListItem'
 import CampListItem from './CampListItem'
 import HikeListItem from './HikeListItem'
 
-export default ({boulders, camps, hikes}) => {
+export default ({boulders, camps, hikes, toggleFullPage}) => {
     return (
-        <div className="list-page">
+        <div className="list-page" >
             <div className="list-title-bar">
                 <div className="list-title">Campgrounds</div>
                 <div className="list-title">Hiking Trails</div>
@@ -14,17 +14,17 @@ export default ({boulders, camps, hikes}) => {
             <div className="list-page-body">
                 <div className="list-section">
                 {camps.map((c, i)=> {
-                    return <CampListItem name={c.name} area={c.area} key={`camp${i}`}/>
+                    return <CampListItem toggleFullPage={() => toggleFullPage(c, 'camp')} name={c.name} area={c.area} key={`camp${i}`}/>
                 })}
                 </div>
                 <div className="list-section">
                 {hikes.map((h, i)=> {
-                    return <HikeListItem name={h.name} area={h.area} key={`hike${i}`}/>
+                    return <HikeListItem toggleFullPage={() => toggleFullPage(h, 'hike')} name={h.name} area={h.area} key={`hike${i}`}/>
                 })}
                 </div>
                 <div className="list-section">
                 {boulders.map((b, i)=> {
-                    return <BoulderListItem name={b.name} area={b.location[0]} key={`boulder${i}`}/>
+                    return <BoulderListItem toggleFullPage={() => toggleFullPage(b, 'boulder')} name={b.name} area={b.location[0]} key={`boulder${i}`}/>
                 })}
                 </div>
             </div>
