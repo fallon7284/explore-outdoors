@@ -1,7 +1,11 @@
 import React from 'react'
+const { getDistance } = require('../utilities')
 
 export default function DetailCard(props){
+    const { locLat, locLng } = props
+    console.log(locLat, locLng, props.area.latitude, props.area.longitude)
     let content
+    const distance = getDistance(props.area.latitude, props.area.longitude, locLat, locLng)
     switch(props.type){
         case 'camp':{
             content = <div style={{opacity: 1}}>
@@ -9,7 +13,7 @@ export default function DetailCard(props){
                 {props.area.name}
             </div>
             <div>
-                {`This campground in ${props.area.location} has ${props.area.numCampsites} campsites available for reservation.`}
+                {`This campground in ${props.area.location} has ${props.area.numCampsites} campsites available for reservation and is ${distance.toFixed(1)} miles away from your location.`}
                 <div onClick={() => props.toggleFullPage(props.area, props.type)} style={{textDecoration: 'none', color: 'white', fontWeight: 'bold', cursor: 'pointer'}}>See more!</div>
                 <img style={{height: '100%', width: '100%', opacity: 1}} src={props.area.imgUrl} alt=''></img>
             </div>
@@ -28,7 +32,7 @@ export default function DetailCard(props){
             {props.area.name}
             </div>
             <div>
-                {`This hike in ${props.area.location} climbs from a low of ${props.area.low}' to a high of ${props.area.high}' above sea level with a total ascent of ${props.area.ascent} over ${props.area.length} miles.`}
+                {`This hike in ${props.area.location} climbs from a low of ${props.area.low}' to a high of ${props.area.high}' above sea level with a total ascent of ${props.area.ascent} over ${props.area.length} miles and is ${distance.toFixed(1)} miles away from your location.`}
                 <div onClick={() => props.toggleFullPage(props.area, props.type)} style={{textDecoration: 'none', color: 'white', fontWeight: 'bold', cursor: 'pointer'}}>See more!</div>
                 <img style={{height: '100%', width: '100%', opacity: 1}} src={props.area.imgMedium} alt=''></img>
             </div>
@@ -41,7 +45,7 @@ export default function DetailCard(props){
             {props.area.name}
             </div>
             <div>
-                {`This boulder in ${props.area.location[0]} is a ${props.area.rating} with a ${props.area.stars} star rating.`}
+                {`This boulder in ${props.area.location[0]} is a ${props.area.rating} with a ${props.area.stars} star rating and is ${distance.toFixed(1)} miles away from your location.`}
                 <div onClick={() => props.toggleFullPage(props.area, props.type)} style={{textDecoration: 'none', color: 'white', fontWeight: 'bold', cursor: 'pointer'}}>See more!</div>
                 <img style={{height: '100%', width: '100%', opacity: 1}} src={props.area.imgMedium} alt=''></img>
             </div>

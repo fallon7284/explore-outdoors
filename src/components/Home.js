@@ -46,8 +46,10 @@ export default class Home extends React.Component{
     toggleFullPage(selectedItem = null, type){
         if (selectedItem){
             selectedItem.type = type
+            
         }
         this.setState({selectedItem})
+        console.log(this.state.selectedItem)
     }
 
     toggleFilters(name){
@@ -112,19 +114,24 @@ export default class Home extends React.Component{
                         mapView={this.state.mapView}
                     />
                 </div>
-                <div>
-                    <Map 
-                        className="map"
-                        zoom={this.state.zoom}
-                        pins={this.state.pins} 
-                        center={this.state.address ? this.state.address : this.state.myLocation} 
-                        myLocation={this.state.myLocation}
-                        filter={this.state.filter}
-                        mapView={this.state.mapView}
-                        toggleFullPage={this.toggleFullPage}
-                    /> 
+                <div className="map-page">
+                    <div>
+                        <Map 
+                            className="map-body"
+                            height={this.state.selectedItem ? '50vh' : '100vh'}
+                            zoom={this.state.zoom}
+                            pins={this.state.pins} 
+                            center={this.state.address ? this.state.address : this.state.myLocation} 
+                            myLocation={this.state.myLocation}
+                            filter={this.state.filter}
+                            mapView={this.state.mapView}
+                            toggleFullPage={this.toggleFullPage}
+                        /> 
+                    </div>
+                    <div>
+                    {this.state.selectedItem && <FullPage toggleFullPage={this.toggleFullPage} area={this.state.selectedItem} />}
+                    </div>  
                 </div>
-                {this.state.selectedItem && <FullPage onClick={this.toggleFullPage} area={this.state.selectedItem} />}
             </div>       
         )
     }
