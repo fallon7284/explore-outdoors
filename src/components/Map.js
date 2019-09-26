@@ -4,6 +4,7 @@ import { mapsKey, hikingProjectKey, mountainProjectKey } from '../secrets'
 import DisplayContainer from './DisplayContainer'
 import axios from 'axios'
 import List from './List'
+const { getDistance } = require('../utilities')
  
 
  
@@ -31,11 +32,15 @@ class Map extends React.Component {
       this.getBoulders(newProps.center.lat, newProps.center.lng)
     }
   }
-  
+
   async getCampgrounds(lat, lng){
     try{
       const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/camps?lat=${lat}&lon=${lng}&maxResults=50&maxDistance=50&key=${hikingProjectKey}`)
-      this.setState({campgrounds: data})
+      let distancedData = data.map(camp => {
+        camp.distance = getDistance(lat, lng, camp.latitude, camp.longitude)
+        return camp
+      })
+      this.setState({campgrounds: distancedData})
     }catch(error){
       console.log(error)
     }
@@ -44,19 +49,32 @@ class Map extends React.Component {
   async getTrails(lat, lng){
     try{
       const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/hikes?lat=${lat}&lon=${lng}&maxResults=75&minStars=4&minLength=5&maxDistance=50&key=${hikingProjectKey}`)
-      this.setState({hikes: data})
+      let distancedData = data.map(hike => {
+        hike.distance = getDistance(lat, lng, hike.latitude, hike.longitude)
+        return hike
+      })
+      console.log(distancedData)
+      this.setState({hikes: distancedData})
     } catch(error){
       console.log(error)
     }
   }
 
-  async getBoulders(lat, lon, maxV = 4, minV = 0){
+  async getBoulders(lat, lng, maxV = 4, minV = 0){
     try{
-      const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/boulders?lat=${lat}&lon=${lon}&maxDistance=50&minDiff=V${minV}&maxDiff=V${maxV}&key=${mountainProjectKey}`)
-      this.setState({boulders: data})
+      const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/boulders?lat=${lat}&lon=${lng}&maxDistance=50&minDiff=V${minV}&maxDiff=V${maxV}&key=${mountainProjectKey}`)
+      let distancedData = data.map(boulder => {
+        boulder.distance = getDistance(lat, lng, boulder.latitude, boulder.longitude)
+        return boulder
+      })
+      this.setState({boulders: distancedData})
     } catch(error){
       console.log(error)
     }
+  }
+
+  sort(list, sortFilter){
+    return [...list].sort((a, b) => a[sortFilter] - b[sortFilter])
   }
 
   render() {
@@ -98,8 +116,6 @@ class Map extends React.Component {
                   key={i}
                   lat={h.latitude}
                   lng={h.longitude}
-                  locLat={lat}
-                  locLng={lng}
                   text={h.name}
                   toggleFullPage={this.props.toggleFullPage}
                   type='hike'
@@ -113,8 +129,6 @@ class Map extends React.Component {
                   key={i}
                   lat={c.latitude}
                   lng={c.longitude}
-                  locLat={lat}
-                  locLng={lng}
                   text={c.name}
                   toggleFullPage={this.props.toggleFullPage}
                   type='camp'
@@ -127,8 +141,6 @@ class Map extends React.Component {
                   <DisplayContainer 
                   key={i}
                   lat={c.latitude}
-                  locLat={lat}
-                  locLng={lng}
                   lng={c.longitude}
                   text={c.name}
                   toggleFullPage={this.props.toggleFullPage}
@@ -142,6 +154,8 @@ class Map extends React.Component {
             {!this.props.mapView && 
             <div>
             <List 
+            sortFilter={this.props.sortFilter}
+            sort={this.sort}
             height={this.props.height}
             toggleFullPage={this.props.toggleFullPage}
             camps={this.state.campgrounds} 

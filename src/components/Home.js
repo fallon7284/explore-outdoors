@@ -27,7 +27,8 @@ export default class Home extends React.Component{
                 camps: true,
                 boulders: true,
                 pins: true
-              }
+              },
+            sortFilter: 'distance' 
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleAddressInput = this.handleAddressInput.bind(this)
@@ -49,7 +50,6 @@ export default class Home extends React.Component{
             
         }
         this.setState({selectedItem})
-        console.log(this.state.selectedItem)
     }
 
     toggleFilters(name){
@@ -69,10 +69,7 @@ export default class Home extends React.Component{
             const data = await axios.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${add}&key=${mapsKey}`)
             if(data.data.results.length){
                 const { lat, lng } = data.data.results[0].geometry.location
-                // const { formatted_address } = data.data.results[0]
-                // const address = {lat, lng, name: add.split('+').join(' '), formatted_address}
                 try{
-                    // const pins = await axios.post('http://explore-outdoors-backend.herokuapp.com/pins', address)
                     this.setState({myLocation: { lat, lng }})
                 } catch(error){
                     console.log(error)
@@ -102,6 +99,11 @@ export default class Home extends React.Component{
         this.setState({inputVal: e.target.value})
     }
 
+    setSortFilter(sortFilter){
+        console.log(sortFilter)
+        this.setState({sortFilter})
+    }
+
 
     render(){
         return (
@@ -112,6 +114,7 @@ export default class Home extends React.Component{
                         handleAddressInput={this.handleAddressInput.bind(this)}
                         toggleMapView={this.toggleMapView.bind(this)}
                         mapView={this.state.mapView}
+                        setSortFilter={this.setSortFilter.bind(this)}
                     />
                 </div>
                 <div className="map-page">
@@ -126,6 +129,7 @@ export default class Home extends React.Component{
                             filter={this.state.filter}
                             mapView={this.state.mapView}
                             toggleFullPage={this.toggleFullPage}
+                            sortFilter={this.state.sortFilter}
                         /> 
                     </div>
                     <div>
