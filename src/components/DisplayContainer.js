@@ -46,7 +46,7 @@ export default function DisplayContainer(props){
 
     return (
         <div style={{width: '30px', height: '40px', zIndex: '3'}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} onClick={handleClick}>
-           { popUp ? <DetailCard locLat={props.locLat} locLng={props.locLng} toggleFullPage={props.toggleFullPage} type={props.type} area={props.area} handleClick={handleClick} />: (
+           { popUp ? <DetailCard toggleFullPage={props.toggleFullPage} type={props.type} area={props.area} handleClick={handleClick} />: (
                 hovered ? 
             <div>
                 <img 
