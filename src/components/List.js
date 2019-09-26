@@ -4,7 +4,10 @@ import CampListItem from './CampListItem'
 import HikeListItem from './HikeListItem'
 
 export default ({boulders, camps, hikes, toggleFullPage, sortFilter, sort}) => {
-    console.log(sortFilter)
+    const sortedHikes = sort(hikes, sortFilter)
+    const sortedCamps = sort(camps, sortFilter)
+    const sortedBoulders = sort(boulders, sortFilter)
+    console.log(sortedBoulders)
     return (
         <div className="list-page" >
             <div className="list-title-bar">
@@ -18,16 +21,16 @@ export default ({boulders, camps, hikes, toggleFullPage, sortFilter, sort}) => {
                     return <CampListItem toggleFullPage={() => toggleFullPage(c, 'camp')} name={c.name} area={c.area} key={`camp${i}`}/>
                 })}
                 </div> */}
-                <div className="list-section">
-                {sort(hikes, sortFilter).map((h, i)=> {
+                {/* <div className="list-section">
+                {sortedHikes.map((h, i)=> {
                     return <HikeListItem toggleFullPage={() => toggleFullPage(h, 'hike')} name={h.name} area={h.area} key={`hike${i}`}/>
                 })}
-                </div>
-                {/* <div className="list-section">
-                {sort(boulders, sortFilter).map((b, i)=> {
+                </div> */}
+                <div className="list-section">
+                {sortedBoulders.map((b, i)=> {
                     return <BoulderListItem toggleFullPage={() => toggleFullPage(b, 'boulder')} name={b.name} area={b.location[0]} key={`boulder${i}`}/>
                 })}
-                </div> */}
+                </div>
             </div>
         </div>
     )

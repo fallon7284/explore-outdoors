@@ -74,7 +74,19 @@ class Map extends React.Component {
   }
 
   sort(list, sortFilter){
-    return [...list].sort((a, b) => a[sortFilter] - b[sortFilter])
+    function compare( a, b ) {
+      let one = a[sortFilter]
+      let two = b[sortFilter]
+      if ( one < two ){
+        return -1;
+      }
+      if ( one > two ){
+        return 1;
+      }
+      return 0;
+    }
+
+    return [...list].sort(compare)
   }
 
   render() {
