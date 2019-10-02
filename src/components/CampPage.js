@@ -12,7 +12,7 @@ export default ({area, toggleFullPage}) => {
             </div>
             <div style={{display: 'flex', flexDirection: 'row'}}>
                 {area.imgUrl && <div style={{backgroundColor: 'black', display: 'flex', flexDirection: 'column', height: 'calc(50% - 25px)', top: 'calc(50% + 25px)', width: '35%', position: 'fixed', justifyContent: 'space-around', overflow: 'hidden'}}>
-                <img src={area.imgUrl} style={{objectFit: 'contain', width: '100%', position: 'relative', height: 'auto'}}/>
+                <img alt="campground" src={area.imgUrl} style={{objectFit: 'contain', width: '100%', position: 'relative', height: 'auto'}}/>
                 </div>}
                 <div style={{display: 'flex', flexDirection: 'column', position: 'relative', top: '25px', left: '100%', color: 'black'}}>
                     {Array.isArray(area.location) ? <ul>

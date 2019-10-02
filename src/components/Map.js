@@ -4,6 +4,7 @@ import { mapsKey, hikingProjectKey, mountainProjectKey } from '../secrets'
 import DisplayContainer from './DisplayContainer'
 import axios from 'axios'
 import List from './List'
+import SideBar from './SideBar';
 const { getDistance } = require('../utilities')
  
 
@@ -92,9 +93,26 @@ class Map extends React.Component {
   render() {
     const { lat, lng, name } = this.props.center.lat && this.props.center.lng ? this.props.center : (this.props.pins[0] ? this.props.pins[0] : {lat: null, lng: null})
     return (
-      <div>
-        <div style={{position: 'fixed', left: '12vw'}}>
-            <div style={{position: 'fixed', height: this.props.height, width: '100%', alignSelf: 'center'}}>
+      <div style={{display: 'flex'}}>
+        <SideBar 
+          toggleFilters={this.props.toggleFilters} 
+          handleAddressInput={this.props.handleAddressInput}
+          toggleMapView={this.props.toggleMapView}
+          mapView={this.props.mapView}
+          setSortFilter={this.props.setSortFilter}
+        />
+        <div 
+          // style={{position: 'fixed', left: '12vw'}}
+        >
+            <div 
+              style={{
+                position: 'fixed', 
+                left: '12vw',
+                height: this.props.height, 
+                width: '100%', 
+                // alignSelf: 'center'
+              }}
+            >
             <GoogleMapReact
               bootstrapURLKeys={{ key: mapsKey}}
               center={{lat, lng}}

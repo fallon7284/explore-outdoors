@@ -7,7 +7,6 @@ export default ({boulders, camps, hikes, toggleFullPage, sortFilter, sort}) => {
     const sortedHikes = sort(hikes, sortFilter)
     const sortedCamps = sort(camps, sortFilter)
     const sortedBoulders = sort(boulders, sortFilter)
-    console.log(sortedBoulders)
     return (
         <div className="list-page" >
             <div className="list-title-bar">
