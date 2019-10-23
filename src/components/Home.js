@@ -4,11 +4,13 @@ import { mapsKey } from '../secrets'
 import Map from './Map'
 import SideBar from './SideBar'
 import FullPage from './FullPage'
+import { connect } from 'react-redux'
+import { fetchLocation } from '../reducers/location';
 
 
 
 
-export default class Home extends React.Component{
+class Home extends React.Component{
     constructor(props){
         super(props)
         this.state = {
@@ -37,7 +39,7 @@ export default class Home extends React.Component{
     }
 
     async componentDidMount(){
-        this.getLocation()
+        this.props.fetchLocation()
     }
 
     toggleMapView(){
@@ -58,10 +60,6 @@ export default class Home extends React.Component{
     }
 
 
-    async getLocation(){
-        const myLocation = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${mapsKey}`)
-        this.setState({myLocation: myLocation.data.location})
-    }
 
     async setCustomLocation(add){
         if (add.length){
@@ -106,6 +104,7 @@ export default class Home extends React.Component{
 
 
     render(){
+        console.log(this.props.location, 'is my current location')
         return (
             // <div className="app-body">
                 /* <div>
@@ -130,8 +129,8 @@ export default class Home extends React.Component{
                         height={this.state.selectedItem ? '50vh' : '100vh'}
                         zoom={this.state.zoom}
                         pins={this.state.pins} 
-                        center={this.state.address ? this.state.address : this.state.myLocation} 
-                        myLocation={this.state.myLocation}
+                        center={this.state.address ? this.state.address : this.props.location} 
+                        myLocation={this.props.location}
                         filter={this.state.filter}
                         mapView={this.state.mapView}
                         toggleFullPage={this.toggleFullPage}
@@ -146,3 +145,19 @@ export default class Home extends React.Component{
         )
     }
 }
+
+
+const mapState = (state) => {
+    return {
+        location: state.location
+    }
+}
+
+const mapDispatch = (dispatch) => {
+    return {
+        fetchLocation: () => dispatch(fetchLocation())
+    }
+}
+
+
+export default connect(mapState, mapDispatch)(Home)
