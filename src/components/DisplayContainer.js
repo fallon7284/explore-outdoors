@@ -22,6 +22,8 @@ export default function DisplayContainer(props){
         setPopup(!popUp)
     }
 
+    const [width, height] = hovered ? ['30px', '40px'] : ['20px', '25px']
+
     let src
     switch (props.type){
         case 'pin':
@@ -43,28 +45,17 @@ export default function DisplayContainer(props){
             src = blueMapPin
             break
     }
-
     return (
         <div style={{width: '30px', height: '40px', zIndex: '3'}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} onClick={handleClick}>
-           { popUp ? <DetailCard toggleFullPage={props.toggleFullPage} type={props.type} area={props.area} handleClick={handleClick} />: (
-                hovered ? 
+           { popUp ? <DetailCard toggleFullPage={props.toggleFullPage} type={props.type} area={props.area} handleClick={handleClick} />: 
             <div>
                 <img 
-                style={{width: '30px', height: '40px'}} 
+                style={{width, height}} 
                 src={src}
                 alt="map pin"
-                />{props.text}
+                />{props.text}{hovered && '\n' + props.name}
             </div>
-            :
-            <div>
-                <img 
-                style={{width: '20px', height: '25px'}} 
-                src={src}
-                alt="map pin"
-                />
-                {props.text}
-            </div>
-    )}
+    }
         </div>
         
     )

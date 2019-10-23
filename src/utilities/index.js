@@ -9,7 +9,6 @@ const getDistance = (currLat, currLong, destLat, destLong) => {
         Math.cos(toRad(currLat)) * Math.cos(toRad(destLat)) *
         Math.sin(dLon / 2) * Math.sin(dLon / 2)
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    console.log(currLat, currLong, destLat, destLong)
     return R * c
 }
 

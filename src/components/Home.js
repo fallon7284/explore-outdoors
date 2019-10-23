@@ -100,15 +100,15 @@ export default class Home extends React.Component{
     }
 
     setSortFilter(sortFilter){
-        console.log(sortFilter)
+        console.log('sorted by ', sortFilter)
         this.setState({sortFilter})
     }
 
 
     render(){
         return (
-            <div className="app-body">
-                <div>
+            // <div className="app-body">
+                /* <div>
                     <SideBar 
                         toggleFilters={this.toggleFilters.bind(this)} 
                         handleAddressInput={this.handleAddressInput.bind(this)}
@@ -116,27 +116,33 @@ export default class Home extends React.Component{
                         mapView={this.state.mapView}
                         setSortFilter={this.setSortFilter.bind(this)}
                     />
-                </div>
-                <div className="map-page">
-                    <div>
-                        <Map 
-                            className="map-body"
-                            height={this.state.selectedItem ? '50vh' : '100vh'}
-                            zoom={this.state.zoom}
-                            pins={this.state.pins} 
-                            center={this.state.address ? this.state.address : this.state.myLocation} 
-                            myLocation={this.state.myLocation}
-                            filter={this.state.filter}
-                            mapView={this.state.mapView}
-                            toggleFullPage={this.toggleFullPage}
-                            sortFilter={this.state.sortFilter}
-                        /> 
-                    </div>
+                </div> */
+                <div
+                    // className="map-page"
+                >
+                    <Map
+                        toggleFilters={this.toggleFilters.bind(this)} 
+                        handleAddressInput={this.handleAddressInput.bind(this)}
+                        toggleMapView={this.toggleMapView.bind(this)}
+                        mapView={this.state.mapView}
+                        setSortFilter={this.setSortFilter.bind(this)}
+                        className="map-body"
+                        height={this.state.selectedItem ? '50vh' : '100vh'}
+                        zoom={this.state.zoom}
+                        pins={this.state.pins} 
+                        center={this.state.address ? this.state.address : this.state.myLocation} 
+                        myLocation={this.state.myLocation}
+                        filter={this.state.filter}
+                        mapView={this.state.mapView}
+                        toggleFullPage={this.toggleFullPage}
+                        sortFilter={this.state.sortFilter}
+                    /> 
+
                     <div>
                     {this.state.selectedItem && <FullPage toggleFullPage={this.toggleFullPage} area={this.state.selectedItem} />}
                     </div>  
                 </div>
-            </div>       
+            // </div>       
         )
     }
 }
