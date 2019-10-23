@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react'
 import { mapsKey, hikingProjectKey, mountainProjectKey } from '../secrets'
 import DisplayContainer from './DisplayContainer'
 import axios from 'axios'
-import List from './List'
+import List from './List/List'
 import SideBar from './SideBar';
 const { getDistance } = require('../utilities')
  
@@ -54,7 +54,6 @@ class Map extends React.Component {
         hike.distance = getDistance(lat, lng, hike.latitude, hike.longitude)
         return hike
       })
-      console.log(distancedData)
       this.setState({hikes: distancedData})
     } catch(error){
       console.log(error)
@@ -93,7 +92,10 @@ class Map extends React.Component {
   render() {
     const { lat, lng, name } = this.props.center.lat && this.props.center.lng ? this.props.center : (this.props.pins[0] ? this.props.pins[0] : {lat: null, lng: null})
     return (
-      <div style={{display: 'flex'}}>
+      <div 
+        // style={{display: 'flex'}}
+        className="map-page"
+      >
         <SideBar 
           toggleFilters={this.props.toggleFilters} 
           handleAddressInput={this.props.handleAddressInput}
@@ -110,7 +112,7 @@ class Map extends React.Component {
                 left: '12vw',
                 height: this.props.height, 
                 width: '100%', 
-                // alignSelf: 'center'
+                alignSelf: 'center'
               }}
             >
             <GoogleMapReact
@@ -172,7 +174,8 @@ class Map extends React.Component {
                   key={i}
                   lat={c.latitude}
                   lng={c.longitude}
-                  text={c.name}
+                  text={c.rating}
+                  name={c.name}
                   toggleFullPage={this.props.toggleFullPage}
                   type='boulder'
                   area={c}

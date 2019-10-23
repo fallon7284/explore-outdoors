@@ -41,10 +41,12 @@
 }
 
 .map-page{
-  left: 12vw;
+  /* left: 12vw;
   width: 88vw;
   height: 100%;
-  border: 5px black;
+  border: 5px black; */
+  display: grid;
+  grid-template-columns: 1fr 88vw;
 }
 
 .list-page{
@@ -54,16 +56,20 @@
   flex-direction: column;
   justify-content: flex-start;
   width: 88vw;
+  /* display: grid;
+  grid-template-rows: 1fr 10fr; */
   left: 12vw;
 }
 .list-page-body{
-  top: 15vh;
+  /* top: 15vh;
   position: fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   width: 88vw;
-  left: 0%;
+  left: 0%; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 
@@ -89,20 +95,15 @@
   background-color: #707070;
 }
 
-.list-item{
-  margin: 5px;
-  height: 12vh;
-  background-color: #707070;
-}
 
-.list-section{
+/* .list-section{
   top: 15vh;
   position: fixed;
-  /* display: inline-block; */
+  /* display: inline-block;
   width: 30%;
   height: 100%;
   overflow-y: scroll;
-}
+} */
 
 .list-page{
   position: fixed;
