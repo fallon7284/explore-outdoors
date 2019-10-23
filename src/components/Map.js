@@ -5,6 +5,10 @@ import DisplayContainer from './DisplayContainer'
 import axios from 'axios'
 import List from './List/List'
 import SideBar from './SideBar';
+import { connect } from 'react-redux'
+import { fetchHikes } from '../reducers/hikes'
+import { fetchCamps } from '../reducers/camps'
+import { fetchBoulders } from '../reducers/boulders'
 const { getDistance } = require('../utilities')
  
 
@@ -24,41 +28,16 @@ class Map extends React.Component {
   componentDidUpdate(oldProps){
     const newProps = this.props
     if (oldProps.myLocation !== newProps.myLocation){
-      this.getCampgrounds(newProps.myLocation.lat, newProps.myLocation.lng)
-      this.getTrails(newProps.myLocation.lat, newProps.myLocation.lng)
+      this.props.fetchCamps(newProps.myLocation.lat, newProps.myLocation.lng)
+      this.props.fetchHikes(newProps.myLocation.lat, newProps.myLocation.lng)
       this.getBoulders(newProps.myLocation.lat, newProps.myLocation.lng)
     } else if (oldProps.center !== newProps.center){
-      this.getCampgrounds(newProps.center.lat, newProps.center.lng)
-      this.getTrails(newProps.center.lat, newProps.center.lng)
+      this.props.fetchCamps(newProps.center.lat, newProps.center.lng)
+      this.props.fetchHikes(newProps.center.lat, newProps.center.lng)
       this.getBoulders(newProps.center.lat, newProps.center.lng)
     }
   }
 
-  async getCampgrounds(lat, lng){
-    try{
-      const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/camps?lat=${lat}&lon=${lng}&maxResults=50&maxDistance=50&key=${hikingProjectKey}`)
-      let distancedData = data.map(camp => {
-        camp.distance = getDistance(lat, lng, camp.latitude, camp.longitude)
-        return camp
-      })
-      this.setState({campgrounds: distancedData})
-    }catch(error){
-      console.log(error)
-    }
-  }
-
-  async getTrails(lat, lng){
-    try{
-      const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/hikes?lat=${lat}&lon=${lng}&maxResults=75&minStars=4&minLength=5&maxDistance=50&key=${hikingProjectKey}`)
-      let distancedData = data.map(hike => {
-        hike.distance = getDistance(lat, lng, hike.latitude, hike.longitude)
-        return hike
-      })
-      this.setState({hikes: distancedData})
-    } catch(error){
-      console.log(error)
-    }
-  }
 
   async getBoulders(lat, lng, maxV = 4, minV = 0){
     try{
@@ -116,7 +95,7 @@ class Map extends React.Component {
               }}
             >
             <GoogleMapReact
-              bootstrapURLKeys={{ key: mapsKey}}
+              bootstrapURLKeys={{ key: mapsKey }}
               center={{lat, lng}}
               defaultCenter={{lat: 0, lng: 0}}
               defaultZoom={this.props.zoom}
@@ -127,41 +106,24 @@ class Map extends React.Component {
                 text={name ? name : "Current Location"}
                 type='current'
               />
-              {this.props.filter.pins && this.props.pins.length && this.props.pins.map((p, i)=> {
-                return (
-                <DisplayContainer
-                key={i}
-                lat={p.lat}
-                lng={p.lng}
-                locLat={lat}
-                locLng={lng}
-                text={p.name}
-                name={p.name ? p.name : ''}
-                toggleFullPage={this.props.toggleFullPage}
-                type='pin'
-              />
-              )
-            })}
-              {this.props.filter.hikes && this.state.hikes.length && this.state.hikes.map((h, i) => {
+              {this.props.filter.hikes && this.props.hikes.length && this.props.hikes.map((h, i) => {
                 return (
                   <DisplayContainer
-                  key={i}
+                  key={`maphikes${i}`}
                   lat={h.latitude}
                   lng={h.longitude}
-                  text={h.name}
                   toggleFullPage={this.props.toggleFullPage}
                   type='hike'
                   area={h}
                   />
                 )
               })}
-              {this.props.filter.camps && this.state.campgrounds.length && this.state.campgrounds.map((c, i) => {
+              {this.props.filter.camps && this.props.camps.length && this.props.camps.map((c, i) => {
                 return (
                   <DisplayContainer 
-                  key={i}
+                  key={`mapcamps${i}`}
                   lat={c.latitude}
                   lng={c.longitude}
-                  text={c.name}
                   toggleFullPage={this.props.toggleFullPage}
                   type='camp'
                   area={c}
@@ -171,11 +133,9 @@ class Map extends React.Component {
               {this.props.filter.boulders && this.state.boulders.length && this.state.boulders.map((c, i) => {
                 return (
                   <DisplayContainer 
-                  key={i}
+                  key={`mapboulders${i}`}
                   lat={c.latitude}
                   lng={c.longitude}
-                  text={c.rating}
-                  name={c.name}
                   toggleFullPage={this.props.toggleFullPage}
                   type='boulder'
                   area={c}
@@ -184,37 +144,39 @@ class Map extends React.Component {
               })}
             </GoogleMapReact>
             </div>
-            {!this.props.mapView && 
-            <div>
-            <List 
-            sortFilter={this.props.sortFilter}
-            sort={this.sort}
-            height={this.props.height}
-            toggleFullPage={this.props.toggleFullPage}
-            camps={this.state.campgrounds} 
-            hikes={this.state.hikes} 
-            boulders={this.state.boulders}/>
-
-
-            {/* <div style={{position: 'fixed', width: '100%', display: 'flex', height: '100vh', justifyContent: 'space-evenly', backgroundColor: 'white', zIndex: 9999, top: 0}}>
-              <div style={{flexGrow: '1'}}>
-                Camps
-              </div>
-              <div style={{flexGrow: '1'}}>
-                Hikes
-              </div>
-              <div style={{flexGrow: '1'}}>
-                Boulders
-              </div>
-            </div> */}
-
-            </div>
-
-            }
+              {!this.props.mapView && 
+              <div>
+                <List 
+                sortFilter={this.props.sortFilter}
+                sort={this.sort}
+                height={this.props.height}
+                toggleFullPage={this.props.toggleFullPage}
+                camps={this.state.campgrounds} 
+                hikes={this.state.hikes} 
+                boulders={this.state.boulders}/>
+              </div>}
             </div>
          </div>
     );
   }
 }
+
+const mapState = (state) => {
+  return {
+    location: state.location,
+    hikes: state.hikes,
+    boulders: state.boulders,
+    camps: state.camps
+  }
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    fetchHikes: (lat, lng) => dispatch(fetchHikes(lat, lng)),
+    fetchCamps: (lat, lng) => dispatch(fetchCamps(lat, lng)),
+    fetchBoulders: (lat, lng) => dispatch(fetchBoulders(lat, lng)),
+  }
+}
+
  
-export default Map
+export default connect(mapState, mapDispatch)(Map)
