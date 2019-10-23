@@ -3,11 +3,7 @@ import { mapsKey } from '../secrets'
 
 const SET_LOCATION = 'SET_LOCATION'
 
-export const setLocation = (location) => {
-    console.log('CALLS SET LOCATION ACTION')
-    return {type: SET_LOCATION, location}
-}
-
+export const setLocation = (location) => ({type: SET_LOCATION, location})
 
 export const fetchCustomLocation = (add) => {
     return async (dispatch) => {
@@ -24,7 +20,6 @@ export const fetchCustomLocation = (add) => {
         }
     }
 }
-
 
 export const fetchLocation = () => {
     return async (dispatch) => {

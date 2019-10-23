@@ -1,8 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { mapsKey } from '../secrets'
 import Map from './Map'
-import SideBar from './SideBar'
 import FullPage from './FullPage'
 import { connect } from 'react-redux'
 import { fetchLocation, fetchCustomLocation } from '../reducers/location';
@@ -117,7 +115,6 @@ class Home extends React.Component{
                         center={this.state.address ? this.state.address : this.props.location} 
                         myLocation={this.props.location}
                         filter={this.state.filter}
-                        mapView={this.state.mapView}
                         toggleFullPage={this.toggleFullPage}
                         sortFilter={this.state.sortFilter}
                     /> 
