@@ -3,9 +3,12 @@ import ToggleCategoryButton from './ToggleCategoryButton';
 import LocationButton from './LocationButton'
 import ToggleViewButton from './ToggleViewButton';
 import SortByButton from './SortByButton'
+import { connect } from 'react-redux'
+import { toggleMapView } from '../reducers/views'
 
 
-export default (props) => {
+const SideBar = (props) => {
+    console.log(props)
     return (
         <div className="side-bar">
             <ToggleCategoryButton toggleFilters={props.toggleFilters} name="Hikes"/>
@@ -18,3 +21,17 @@ export default (props) => {
         </div>
     )
 }
+
+const mapState = (state) => {
+    return {
+        mapView: state.mapView
+    }
+}
+
+const mapDispatch = (dispatch) => {
+    return {
+        toggleMapView: () => dispatch(toggleMapView())
+    }
+}
+
+export default connect(mapState, mapDispatch)(SideBar)

@@ -1,6 +1,6 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react'
-import { mapsKey, hikingProjectKey, mountainProjectKey } from '../secrets'
+import { mapsKey, mountainProjectKey } from '../secrets'
 import DisplayContainer from './DisplayContainer'
 import axios from 'axios'
 import List from './List/List'
@@ -26,6 +26,7 @@ class Map extends React.Component {
 
 
   componentDidUpdate(oldProps){
+    console.log(this.props)
     const newProps = this.props
     if (oldProps.myLocation !== newProps.myLocation){
       this.props.fetchCamps(newProps.myLocation.lat, newProps.myLocation.lng)
@@ -69,7 +70,7 @@ class Map extends React.Component {
   }
 
   render() {
-    const { lat, lng, name } = this.props.center.lat && this.props.center.lng ? this.props.center : (this.props.pins[0] ? this.props.pins[0] : {lat: null, lng: null})
+    const { lat, lng, name } = this.props.center
     return (
       <div 
         // style={{display: 'flex'}}
@@ -162,11 +163,13 @@ class Map extends React.Component {
 }
 
 const mapState = (state) => {
+  console.log(state, 'from mapstate')
   return {
     location: state.location,
     hikes: state.hikes,
     boulders: state.boulders,
-    camps: state.camps
+    camps: state.camps,
+    mapView: state.views.mapView
   }
 }
 
