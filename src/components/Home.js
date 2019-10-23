@@ -5,7 +5,7 @@ import Map from './Map'
 import SideBar from './SideBar'
 import FullPage from './FullPage'
 import { connect } from 'react-redux'
-import { fetchLocation } from '../reducers/location';
+import { fetchLocation, fetchCustomLocation } from '../reducers/location';
 
 
 
@@ -61,21 +61,6 @@ class Home extends React.Component{
 
 
 
-    async setCustomLocation(add){
-        if (add.length){
-            add = add.split(' ').join('+')
-            const data = await axios.post(`https://maps.googleapis.com/maps/api/geocode/json?address=${add}&key=${mapsKey}`)
-            if(data.data.results.length){
-                const { lat, lng } = data.data.results[0].geometry.location
-                try{
-                    this.setState({myLocation: { lat, lng }})
-                } catch(error){
-                    console.log(error)
-                }
-            }
-            
-        }
-    }
 
     async getPinsFromDatabase(){
         try{
@@ -89,7 +74,7 @@ class Home extends React.Component{
 
 
     handleAddressInput(inputVal){
-        this.setCustomLocation(inputVal)
+        this.props.fetchCustomLocation(inputVal)
         this.setState({inputVal: ''})
     }
 
@@ -155,7 +140,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
     return {
-        fetchLocation: () => dispatch(fetchLocation())
+        fetchLocation: () => dispatch(fetchLocation()),
+        fetchCustomLocation: (location) => dispatch(fetchCustomLocation(location))
     }
 }
 
