@@ -25,26 +25,32 @@ export default function DisplayContainer(props){
     const [width, height] = hovered ? ['30px', '40px'] : ['20px', '25px']
 
     let src
+    let text = props.text ? props.text : props.area.name
+    let name = ''
+
     switch (props.type){
-        case 'pin':
-            src = blueMapPin
-            break
         case 'camp':
             src = campPin
             break
         case 'current': 
             src = redPin
+
             break
         case 'hike': 
             src = hiker
             break
         case 'boulder': 
             src = climber
+            text = props.area.rating
+            name = props.area.name
             break
         default:
             src = blueMapPin
             break
     }
+
+    
+
     return (
         <div style={{width: '30px', height: '40px', zIndex: '3'}} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} onClick={handleClick}>
            { popUp ? <DetailCard toggleFullPage={props.toggleFullPage} type={props.type} area={props.area} handleClick={handleClick} />: 
@@ -53,7 +59,7 @@ export default function DisplayContainer(props){
                 style={{width, height}} 
                 src={src}
                 alt="map pin"
-                />{props.text}{hovered && '\n' + props.name}
+                />{text}{hovered && '\n' + name}
             </div>
     }
         </div>
