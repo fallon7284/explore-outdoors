@@ -12,16 +12,12 @@ class Home extends React.Component{
         super(props)
         this.state = {
             inputVal: '',
-            pins: [],
-            campgrounds: [],
             zoom: 9,
             filter: {
                 hikes: true,
                 camps: true,
-                boulders: true,
-                pins: true
-              },
-            sortFilter: 'distance' 
+                boulders: true
+            }
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleAddressInput = this.handleAddressInput.bind(this)
@@ -55,11 +51,6 @@ class Home extends React.Component{
         this.setState({inputVal: e.target.value})
     }
 
-    setSortFilter(sortFilter){
-        console.log('sorted by ', sortFilter)
-        this.setState({sortFilter})
-    }
-
 
     render(){
         console.log(this.props.location, 'is my current location')
@@ -69,13 +60,11 @@ class Home extends React.Component{
                 <Map
                     toggleFilters={this.toggleFilters.bind(this)} 
                     handleAddressInput={this.handleAddressInput.bind(this)}
-                    setSortFilter={this.setSortFilter.bind(this)}
                     className="map-body"
                     height={this.state.selectedItem ? '50vh' : '100vh'}
                     zoom={this.state.zoom}
                     center={this.props.location} 
                     filter={this.state.filter}
-                    sortFilter={this.state.sortFilter}
                 /> 
 
                 <div>
@@ -91,7 +80,8 @@ const mapState = (state) => {
     return {
         location: state.location,
         openCard: state.openCard,
-        detailView: state.detailView
+        detailView: state.views.detailView,
+        mapView: state.views.mapView
     }
 }
 

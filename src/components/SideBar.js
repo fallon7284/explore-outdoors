@@ -5,18 +5,17 @@ import ToggleViewButton from './ToggleViewButton';
 import SortByButton from './SortByButton'
 import { connect } from 'react-redux'
 import { toggleMapView } from '../reducers/views'
+import { setFilter } from '../reducers/filters'
 
 
 const SideBar = (props) => {
-    console.log(props)
     return (
         <div className="side-bar">
             <ToggleCategoryButton toggleFilters={props.toggleFilters} name="Hikes"/>
             <ToggleCategoryButton toggleFilters={props.toggleFilters} name="Camps"/>
-            <ToggleCategoryButton toggleFilters={props.toggleFilters} name="Pins"/>
             <ToggleCategoryButton toggleFilters={props.toggleFilters} name="Boulders"/>
             <ToggleViewButton toggleMapView={props.toggleMapView} mapView={props.mapView}/>
-            {!props.mapView && <SortByButton callback={props.setSortFilter} name="Sort List" />}
+            {!props.mapView && <SortByButton callback={props.setFilter} name="Sort List" />}
             <LocationButton callback={props.handleAddressInput} name="Set Location"/>
         </div>
     )
@@ -24,13 +23,14 @@ const SideBar = (props) => {
 
 const mapState = (state) => {
     return {
-        mapView: state.mapView
+        mapView: state.views.mapView
     }
 }
 
 const mapDispatch = (dispatch) => {
     return {
-        toggleMapView: () => dispatch(toggleMapView())
+        toggleMapView: () => dispatch(toggleMapView()),
+        setFilter: (filter) => dispatch(setFilter(filter))
     }
 }
 
