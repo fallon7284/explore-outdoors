@@ -31,27 +31,14 @@ class Map extends React.Component {
     if (oldProps.myLocation !== newProps.myLocation){
       this.props.fetchCamps(newProps.myLocation.lat, newProps.myLocation.lng)
       this.props.fetchHikes(newProps.myLocation.lat, newProps.myLocation.lng)
-      this.getBoulders(newProps.myLocation.lat, newProps.myLocation.lng)
+      this.props.fetchBoulders(newProps.myLocation.lat, newProps.myLocation.lng)
     } else if (oldProps.center !== newProps.center){
       this.props.fetchCamps(newProps.center.lat, newProps.center.lng)
       this.props.fetchHikes(newProps.center.lat, newProps.center.lng)
-      this.getBoulders(newProps.center.lat, newProps.center.lng)
+      this.props.fetchBoulders(newProps.center.lat, newProps.center.lng)
     }
   }
 
-
-  async getBoulders(lat, lng, maxV = 4, minV = 0){
-    try{
-      const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/boulders?lat=${lat}&lon=${lng}&maxDistance=50&minDiff=V${minV}&maxDiff=V${maxV}&key=${mountainProjectKey}`)
-      let distancedData = data.map(boulder => {
-        boulder.distance = getDistance(lat, lng, boulder.latitude, boulder.longitude)
-        return boulder
-      })
-      this.setState({boulders: distancedData})
-    } catch(error){
-      console.log(error)
-    }
-  }
 
   sort(list, sortFilter){
     function compare( a, b ) {
@@ -131,7 +118,7 @@ class Map extends React.Component {
                   />
                 )
               })}
-              {this.props.filter.boulders && this.state.boulders.length && this.state.boulders.map((c, i) => {
+              {this.props.filter.boulders && this.props.boulders.length && this.props.boulders.map((c, i) => {
                 return (
                   <DisplayContainer 
                   key={`mapboulders${i}`}
