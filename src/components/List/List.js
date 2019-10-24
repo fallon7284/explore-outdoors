@@ -2,11 +2,15 @@ import React from 'react'
 import BoulderListItem from '../BoulderListItem/BoulderListItem'
 import CampListItem from '../CampListItem'
 import HikeListItem from '../HikeListItem'
+import { sort } from '../../utilities'
+import { connect } from 'react-redux';
 
-export default ({boulders, camps, hikes, toggleFullPage, sortFilter, sort}) => {
-    const sortedHikes = sort(hikes, sortFilter)
-    const sortedCamps = sort(camps, sortFilter)
-    const sortedBoulders = sort(boulders, sortFilter)
+const List = (props) => {
+    const toggleFullPage = props.toggleFullPage
+    const sortFilter = props.sortFilter
+    const sortedHikes = sort(props.hikes, sortFilter)
+    const sortedCamps = sort(props.camps, sortFilter)
+    const sortedBoulders = sort(props.boulders, sortFilter)
     return (
         <div className="list-page" 
             // style={{display: 'flex', flexDirection: 'column'}}
@@ -39,3 +43,13 @@ export default ({boulders, camps, hikes, toggleFullPage, sortFilter, sort}) => {
         </div>
     )
 }
+
+const mapState = (state) => {
+    return {
+        hikes: state.hikes,
+        campes: state.camps,
+        boulders: state.boulders
+    }
+}
+
+export default connect(mapState)(List)

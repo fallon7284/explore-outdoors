@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { fetchHikes } from '../reducers/hikes'
 import { fetchCamps } from '../reducers/camps'
 import { fetchBoulders } from '../reducers/boulders'
-const { getDistance } = require('../utilities')
+const { getDistance, sort } = require('../utilities')
  
 
  
@@ -39,22 +39,6 @@ class Map extends React.Component {
     }
   }
 
-
-  sort(list, sortFilter){
-    function compare( a, b ) {
-      let one = a[sortFilter]
-      let two = b[sortFilter]
-      if ( one < two ){
-        return -1;
-      }
-      if ( one > two ){
-        return 1;
-      }
-      return 0;
-    }
-
-    return [...list].sort(compare)
-  }
 
   render() {
     const { lat, lng, name } = this.props.center
@@ -136,7 +120,6 @@ class Map extends React.Component {
               <div>
                 <List 
                 sortFilter={this.props.sortFilter}
-                sort={this.sort}
                 height={this.props.height}
                 toggleFullPage={this.props.toggleFullPage}
                 camps={this.state.campgrounds} 

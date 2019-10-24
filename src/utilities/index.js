@@ -12,6 +12,23 @@ const getDistance = (currLat, currLong, destLat, destLong) => {
     return R * c
 }
 
+const sort = (list, sortFilter) => {
+    function compare( a, b ) {
+      let one = a[sortFilter]
+      let two = b[sortFilter]
+      if ( one < two ){
+        return -1;
+      }
+      if ( one > two ){
+        return 1;
+      }
+      return 0;
+    }
+
+    return [...list].sort(compare)
+  }
+
 module.exports = {
-    getDistance
+    getDistance,
+    sort
 }
