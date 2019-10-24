@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { fetchHikes } from '../reducers/hikes'
 import { fetchCamps } from '../reducers/camps'
 import { fetchBoulders } from '../reducers/boulders'
-const { getDistance } = require('../utilities')
+const { getDistance, sort } = require('../utilities')
  
 
  
@@ -31,43 +31,14 @@ class Map extends React.Component {
     if (oldProps.myLocation !== newProps.myLocation){
       this.props.fetchCamps(newProps.myLocation.lat, newProps.myLocation.lng)
       this.props.fetchHikes(newProps.myLocation.lat, newProps.myLocation.lng)
-      this.getBoulders(newProps.myLocation.lat, newProps.myLocation.lng)
+      this.props.fetchBoulders(newProps.myLocation.lat, newProps.myLocation.lng)
     } else if (oldProps.center !== newProps.center){
       this.props.fetchCamps(newProps.center.lat, newProps.center.lng)
       this.props.fetchHikes(newProps.center.lat, newProps.center.lng)
-      this.getBoulders(newProps.center.lat, newProps.center.lng)
+      this.props.fetchBoulders(newProps.center.lat, newProps.center.lng)
     }
   }
 
-
-  async getBoulders(lat, lng, maxV = 4, minV = 0){
-    try{
-      const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/boulders?lat=${lat}&lon=${lng}&maxDistance=50&minDiff=V${minV}&maxDiff=V${maxV}&key=${mountainProjectKey}`)
-      let distancedData = data.map(boulder => {
-        boulder.distance = getDistance(lat, lng, boulder.latitude, boulder.longitude)
-        return boulder
-      })
-      this.setState({boulders: distancedData})
-    } catch(error){
-      console.log(error)
-    }
-  }
-
-  sort(list, sortFilter){
-    function compare( a, b ) {
-      let one = a[sortFilter]
-      let two = b[sortFilter]
-      if ( one < two ){
-        return -1;
-      }
-      if ( one > two ){
-        return 1;
-      }
-      return 0;
-    }
-
-    return [...list].sort(compare)
-  }
 
   render() {
     const { lat, lng, name } = this.props.center
@@ -131,7 +102,7 @@ class Map extends React.Component {
                   />
                 )
               })}
-              {this.props.filter.boulders && this.state.boulders.length && this.state.boulders.map((c, i) => {
+              {this.props.filter.boulders && this.props.boulders.length && this.props.boulders.map((c, i) => {
                 return (
                   <DisplayContainer 
                   key={`mapboulders${i}`}
@@ -149,7 +120,6 @@ class Map extends React.Component {
               <div>
                 <List 
                 sortFilter={this.props.sortFilter}
-                sort={this.sort}
                 height={this.props.height}
                 toggleFullPage={this.props.toggleFullPage}
                 camps={this.state.campgrounds} 
