@@ -169,7 +169,8 @@ const mapState = (state) => {
     hikes: state.hikes,
     boulders: state.boulders,
     camps: state.camps,
-    mapView: state.views.mapView
+    mapView: state.views.mapView,
+    sortFilter: state.filter
   }
 }
 
