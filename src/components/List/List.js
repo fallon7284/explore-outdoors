@@ -1,7 +1,7 @@
 import React from 'react'
 import BoulderListItem from '../BoulderListItem/BoulderListItem'
-import CampListItem from '../CampListItem'
-import HikeListItem from '../HikeListItem'
+import CampListItem from '../CampListItem/CampListItem'
+import HikeListItem from '../HikeListItem/HikeListItem'
 import { sort } from '../../utilities'
 import { connect } from 'react-redux';
 

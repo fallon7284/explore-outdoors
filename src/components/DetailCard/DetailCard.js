@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function DetailCard(props){
     let content
-    switch(props.type){
+    switch(props.area.type){
         case 'camp':{
             content = <div style={{opacity: 1}}>
                 <div>

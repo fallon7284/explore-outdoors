@@ -11,6 +11,7 @@ export const fetchCamps = (lat, lng) => {
         const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/camps?lat=${lat}&lon=${lng}&maxResults=50&maxDistance=50&key=${hikingProjectKey}`)
         let distancedData = data.map(camp => {
             camp.distance = getDistance(lat, lng, camp.latitude, camp.longitude)
+            camp.type = 'camp'
             return camp
         })
         dispatch(setCamps(distancedData))

@@ -4,26 +4,26 @@ const TOGGLE_OPEN_CARD = 'TOGGLE_OPEN_CARD'
 
 const toggledMapView = () => ({type: TOGGLE_MAP_VIEW})
 
-const toggledDetailView = () => ({type: TOGGLE_DETAIL_VIEW})
+const toggledDetailView = (index = null) => ({type: TOGGLE_DETAIL_VIEW, index})
 
-const toggledOpenCard = (card = null) => ({type: TOGGLE_OPEN_CARD, card})
+const toggledOpenCard = (card) => ({type: TOGGLE_OPEN_CARD, card})
 
 
 export const toggleMapView = () => {
     return (dispatch) => dispatch(toggledMapView())
 }
 
-export const toggleDetailView = () => {
-    return (dispatch) => dispatch(toggledDetailView())
+export const toggleDetailView = (area) => {
+    return (dispatch) => dispatch(toggledDetailView(area))
 }
 
-export const toggleOpenCard = () => {
-    return (dispatch) => dispatch(toggledOpenCard())
+export const toggleOpenCard = (area) => {
+    return (dispatch) => dispatch(toggledOpenCard(area))
 }
 
 const defaultViews = {
     mapView: true,
-    detailView: false,
+    detailView: null,
     card: null
 }
 
@@ -37,7 +37,7 @@ export default function(state = defaultViews, action){
         case TOGGLE_DETAIL_VIEW:
             return {
                 ...state,
-                detailView: !state.detailView
+                detailView: state.index
             }
         case TOGGLE_OPEN_CARD: 
             return {

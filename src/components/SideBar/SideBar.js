@@ -1,11 +1,11 @@
 import React from 'react'
-import ToggleCategoryButton from './ToggleCategoryButton';
-import LocationButton from './LocationButton'
-import ToggleViewButton from './ToggleViewButton';
-import SortByButton from './SortByButton'
+import ToggleCategoryButton from '../ToggleCategoryButton/ToggleCategoryButton';
+import LocationButton from '../LocationButton/LocationButton'
+import ToggleViewButton from '../ToggleViewButton/ToggleViewButton';
+import SortByButton from '../SortByButton/SortByButton'
 import { connect } from 'react-redux'
-import { toggleMapView } from '../reducers/views'
-import { setFilter } from '../reducers/filters'
+import { toggleMapView } from '../../reducers/views'
+import { setFilter } from '../../reducers/filters'
 
 
 const SideBar = (props) => {

@@ -12,6 +12,7 @@ export const fetchBoulders = (lat, lng, maxV = 4, minV = 0) => {
         const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/boulders?lat=${lat}&lon=${lng}&maxDistance=50&minDiff=V${minV}&maxDiff=V${maxV}&key=${mountainProjectKey}`)
         let distancedData = data.map(boulder => {
             boulder.distance = getDistance(lat, lng, boulder.latitude, boulder.longitude)
+            boulder.type = 'boulder'
             return boulder
           })
         dispatch(setBoulders(distancedData))

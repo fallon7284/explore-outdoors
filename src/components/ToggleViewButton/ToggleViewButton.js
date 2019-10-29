@@ -1,5 +1,5 @@
 import React from 'react'
-import SideButton from './SideButton'
+import SideButton from '../SideButton/SideButton'
 
 export default ({toggleMapView, mapView}) => {
     return (

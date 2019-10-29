@@ -1,15 +1,13 @@
 import React from 'react';
 import './App.css';
-import Home from './components/Home'
+import Home from './components/Home/Home'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import WelcomeScreen from '../src/components/WelcomeScreen'
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Route exact path="/" component={WelcomeScreen}/>
-        <Route path="/home" component={Home}/>
+        <Route exact path="/" component={Home}/>
       </Router>
     </div>
   );

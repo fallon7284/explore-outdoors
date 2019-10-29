@@ -1,10 +1,10 @@
 import React from 'react'
 import axios from 'axios'
-import Map from './Map'
-import FullPage from './FullPage'
+import Map from '../Map/Map'
+import FullPage from '../FullPage/FullPage'
 import { connect } from 'react-redux'
-import { toggleMapView, toggleOpenCard, toggleDetailView } from '../reducers/views'
-import { fetchLocation, fetchCustomLocation } from '../reducers/location';
+import { toggleMapView, toggleOpenCard, toggleDetailView } from '../../reducers/views'
+import { fetchLocation, fetchCustomLocation } from '../../reducers/location';
 
 
 class Home extends React.Component{
@@ -12,7 +12,7 @@ class Home extends React.Component{
         super(props)
         this.state = {
             inputVal: '',
-            zoom: 9,
+            zoom: 10,
             filter: {
                 hikes: true,
                 camps: true,
@@ -44,7 +44,6 @@ class Home extends React.Component{
 
     handleAddressInput(inputVal){
         this.props.fetchCustomLocation(inputVal)
-        this.setState({inputVal: ''})
     }
 
     handleChange(e){
@@ -61,14 +60,15 @@ class Home extends React.Component{
                     toggleFilters={this.toggleFilters.bind(this)} 
                     handleAddressInput={this.handleAddressInput.bind(this)}
                     className="map-body"
-                    height={this.state.selectedItem ? '50vh' : '100vh'}
+                    height={this.props.detailView ? '50vh' : '100vh'}
                     zoom={this.state.zoom}
                     center={this.props.location} 
                     filter={this.state.filter}
+                    location={this.props.location}
                 /> 
 
                 <div>
-                {this.state.selectedItem && <FullPage toggleFullPage={this.toggleFullPage} area={this.state.selectedItem} />}
+                {this.props.detailView && <FullPage toggleFullPage={this.toggleFullPage} area={this.props.detailView} />}
                 </div>  
             </div>     
         )

@@ -29,8 +29,8 @@ export const fetchLocation = () => {
 }
 
 
-// const initialState = {lat: 41.895266, lng: -87.63903499999999}
-const initialState = {lat: null, lng: null}
+const initialState = {lat: 41.895266, lng: -87.63903499999999}
+// const initialState = {lat: null, lng: null}
 
 const locationReducer = (state = initialState, action) => {
     switch (action.type){
