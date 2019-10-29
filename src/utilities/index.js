@@ -28,6 +28,7 @@ const sort = (list, sortFilter) => {
     return [...list].sort(compare)
   }
 
+
 module.exports = {
     getDistance,
     sort

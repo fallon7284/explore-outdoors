@@ -1,7 +1,7 @@
 import React from 'react'
-import BoulderPage from './BoulderPage'
-import HikePage from './HikePage'
-import CampPage from './CampPage'
+import BoulderPage from '../BoulderPage/BoulderPage'
+import HikePage from '../HikePage/HikePage'
+import CampPage from '../CampPage/CampPage'
 
 export default ({area, toggleFullPage}) => {
     let page
