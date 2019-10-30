@@ -1,10 +1,9 @@
 import React from 'react'
-import axios from 'axios'
 import Map from '../Map/Map'
 import FullPage from '../FullPage/FullPage'
 import { connect } from 'react-redux'
-import { toggleMapView, toggleOpenCard, toggleDetailView } from '../../reducers/views'
-import { fetchLocation, fetchCustomLocation } from '../../reducers/location';
+import { toggleFullPage } from '../../redux/views'
+import { fetchLocation, fetchCustomLocation } from '../../redux/location';
 
 
 class Home extends React.Component{
@@ -52,10 +51,10 @@ class Home extends React.Component{
 
 
     render(){
-        console.log(this.props.location, 'is my current location')
         return (
             <div
             >
+                <div>
                 <Map
                     toggleFilters={this.toggleFilters.bind(this)} 
                     handleAddressInput={this.handleAddressInput.bind(this)}
@@ -64,11 +63,8 @@ class Home extends React.Component{
                     zoom={this.state.zoom}
                     center={this.props.location} 
                     filter={this.state.filter}
-                    location={this.props.location}
-                /> 
-
-                <div>
-                {this.props.detailView && <FullPage toggleFullPage={this.toggleFullPage} area={this.props.detailView} />}
+                    />
+                {this.props.detailView && <FullPage toggleFullPage={this.props.toggleFullPage} area={this.props.detailView}/>}
                 </div>  
             </div>     
         )
@@ -88,7 +84,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
     return {
         fetchLocation: () => dispatch(fetchLocation()),
-        fetchCustomLocation: (location) => dispatch(fetchCustomLocation(location))
+        fetchCustomLocation: (location) => dispatch(fetchCustomLocation(location)),
+        toggleFullPage: (index) => dispatch(toggleFullPage(index))
     }
 }
 
