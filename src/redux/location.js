@@ -1,9 +1,9 @@
 import axios from 'axios'
 // import { mapsKey } from '../secrets'
-const getKey = () => {
-    return process.env.MAPS_KEY ? process.env.MAPS_KEY : require('../secrets').mapsKey
-}
-const mapsKey = getKey()
+
+
+const mapsKey = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? require('../secrets').mapsKey : process.env.MAPS_KEY
+
 
 const SET_LOCATION = 'SET_LOCATION'
 
