@@ -1,6 +1,9 @@
 import axios from 'axios'
-import { mapsKey } from '../secrets'
-const key = process.env.MAPS_KEY || mapsKey
+// import { mapsKey } from '../secrets'
+const getKey = () => {
+    return process.env.MAPS_KEY ? process.env.MAPS_KEY : require('../secrets').mapsKey
+}
+const mapsKey = getKey()
 
 const SET_LOCATION = 'SET_LOCATION'
 
@@ -24,7 +27,7 @@ export const fetchCustomLocation = (add) => {
 
 export const fetchLocation = () => {
     return async (dispatch) => {
-        const { data } = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${key}`)
+        const { data } = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${mapsKey}`)
         dispatch(setLocation(data.location))
     }
 }
