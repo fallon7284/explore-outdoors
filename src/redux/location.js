@@ -1,7 +1,7 @@
 import axios from 'axios'
-import getKey from '../utilities/getKey'
-// import { mapsKey } from '../secrets'
-const mapsKey = getKey()
+// import getKey from '../utilities/getKey'
+// import { mapsKey } from '../../config'
+const mapsKey = process.env.REACT_APP_MAPS_KEY
 
 
 const SET_LOCATION = 'SET_LOCATION'
