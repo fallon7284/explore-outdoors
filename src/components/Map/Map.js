@@ -112,9 +112,9 @@ class Map extends React.Component {
                 sortFilter={this.props.sortFilter}
                 height={this.props.height}
                 toggleFullPage={this.props.toggleFullPage}
-                camps={this.state.campgrounds} 
-                hikes={this.state.hikes} 
-                boulders={this.state.boulders}/>
+                camps={this.props.camps} 
+                hikes={this.props.hikes} 
+                boulders={this.props.boulders}/>
               </div>}
             </div>
          </div>
