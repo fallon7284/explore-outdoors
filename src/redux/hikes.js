@@ -1,4 +1,3 @@
-import { hikingProjectKey } from '../secrets'
 import { getDistance } from '../utilities'
 import axios from 'axios'
 
@@ -9,7 +8,7 @@ const setHikes = (hikes) => ({type: SET_HIKES, hikes})
 
 export const fetchHikes = (lat, lng) => {
     return async (dispatch) => {
-        const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/hikes?lat=${lat}&lon=${lng}&maxResults=75&minStars=4&minLength=5&maxDistance=50&key=${hikingProjectKey}`)
+        const { data } = await axios.get(`http://explore-outdoors-backend.herokuapp.com/hikes?lat=${lat}&lon=${lng}&maxResults=75&minStars=4&minLength=5&maxDistance=50&key=${process.env.REACT_APP_HIKING_KEY}`)
         let distancedData = data.map(hike => {
             hike.distance = getDistance(lat, lng, hike.latitude, hike.longitude)
             hike.type = 'hike'
