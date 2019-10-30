@@ -15,6 +15,8 @@ export default ({area, toggleFullPage}) => {
         case 'camp':
             page = <CampPage toggleFullPage={toggleFullPage} area={area} />
             break
+        default:
+            page = <div>Not Found</div>
     }
     return (
         <div style={{position: 'fixed', left: '12vw', zIndex: '9999', top: '50%'}}>

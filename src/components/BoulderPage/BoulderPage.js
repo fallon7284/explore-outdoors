@@ -3,27 +3,32 @@ import React from 'react'
 export default ({area, toggleFullPage}) => {
     console.log(area)
     return (
-        <div style={{overflow: 'auto', backgroundColor: '#202020', width: '88%', display: "flex", flexDirection: 'column'}}>
-            <div style={{position: 'fixed', backgroundColor: '#202020', color: 'white', width: '88%', height: '25px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <div style={{width: '70px'}}>
-                </div>
-                <div>
-                    {area.name}
-                </div>
-                <div onClick={() => toggleFullPage()} style={{cursor: 'pointer', width: '70px'}}>Close[X]
-                </div>
+        <div style={{position: 'fixed', color: 'white', width: '88%', height: '50%', left: '12%'}}>
+            <div style={{display: 'flex', flexDirection: 'row', height: '25px', justifyContent: 'space-between', backgroundColor: '#202020'}}>
+                <div style={{width: '70px'}}></div>
+                    <div>
+                        {area.name}
+                        {area.rating && area.rating}
+                    </div>
+                <div onClick={() => toggleFullPage()} style={{cursor: 'pointer', width: '70px'}}>Close[X]</div>
             </div>
-            <div style={{display: 'flex', flexDirection: 'row', width: "100%", backgroundColor: '#cecece'}}>
+            <div style={{height: 'calc(100% - 25px)', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', justifyContent: 'space-between', color: 'black'}}>
                 {area.imgMedium && 
-                <div style={{backgroundColor: 'black', display: 'flex', flexDirection: 'column', height: 'calc(50% - 25px)', top: 'calc(50% + 25px)', width: '35%', position: 'fixed', justifyContent: 'space-around', overflow: 'hidden'}}>
-                    <img alt="boulder" src={area.imgMedium} style={{objectFit: 'contain', width: '100%', position: 'relative', height: 'auto'}}/>
-                </div>}
-                <div style={{display: 'flex', flexDirection: 'column', position: 'relative', top: '25px', left: '100%', color: 'black'}}>
-                    {Array.isArray(area.location) ? <ul>
-                        Location: 
-                        {area.location.map((l, i)=> <li key={i}>{l}</li>)}
-                    </ul> : 
-                    <div>Location: {area.location}</div>}
+                <img alt="trail" src={area.imgMedium} style={{maxHeight: '100%', maxWidth: '100%', alignSelf: 'center', justifySelf: 'center'}}/>}
+                <div style={{top: 'calc(50% + 25px)', color: 'black', backgroundColor: 'white', marginLeft: '.5vh'}}>
+                    <h3>Location: </h3>
+                    {Array.isArray(area.location) ? <div>
+                        {area.location.map((l, i)=> <div key={i}>{l}</div>)}
+                    </div> : 
+                    <div>{area.location}</div>}
+                    <h3>Rating:</h3>
+                    <p>{area.rating}</p>
+                </div>
+                <div style={{top: 'calc(50% + 25px)', color: 'black', backgroundColor: 'white', marginLeft: '.5vh'}}>
+                    <h3>Ascent:</h3>
+                    <p>{area.ascent}</p>
+                    <h3>Distance:</h3>
+                    <p>{area.length} miles</p>
                 </div>
             </div>
         </div>

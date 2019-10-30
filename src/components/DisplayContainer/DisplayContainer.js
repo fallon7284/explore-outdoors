@@ -8,20 +8,20 @@ import climber from '../../images/climb.png'
 
 export default function DisplayContainer(props){
     const [hovered, setHovered] = useState(false)
-    const [popUp, setPopup] = useState(false)
-    const { setPoppedUp, id } = props
+    const { setPoppedUp } = props
 
     const handleMouseOver = () => {
         setHovered(true)
+        // setPoppedUp()
     }
 
     const handleMouseOut = () => {
         setHovered(false)
+        // setPoppedUp()
     }
 
     const handleClick = () => {
         setPoppedUp()
-        // setPopup(!popUp)
     }
 
     const [width, height] = hovered ? ['30px', '40px'] : ['20px', '25px']

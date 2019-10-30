@@ -4,8 +4,8 @@ import LocationButton from '../LocationButton/LocationButton'
 import ToggleViewButton from '../ToggleViewButton/ToggleViewButton';
 import SortByButton from '../SortByButton/SortByButton'
 import { connect } from 'react-redux'
-import { toggleMapView } from '../../reducers/views'
-import { setFilter } from '../../reducers/filters'
+import { toggleMapView } from '../../redux/views'
+import { setFilter } from '../../redux/filters'
 
 
 const SideBar = (props) => {

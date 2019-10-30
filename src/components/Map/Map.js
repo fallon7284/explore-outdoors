@@ -1,17 +1,15 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react'
-import { mapsKey, mountainProjectKey } from '../../secrets'
+import { mapsKey } from '../../secrets'
 import DisplayContainer from '../DisplayContainer/DisplayContainer'
-import axios from 'axios'
 import List from '../List/List'
 import SideBar from '../SideBar/SideBar';
 import { connect } from 'react-redux'
-import { fetchHikes } from '../../reducers/hikes'
-import { fetchCamps } from '../../reducers/camps'
-import { fetchBoulders } from '../../reducers/boulders'
-import { toggleOpenCard, toggleDetailView } from '../../reducers/views'
+import { fetchHikes } from '../../redux/hikes'
+import { fetchCamps } from '../../redux/camps'
+import { fetchBoulders } from '../../redux/boulders'
+import { toggleOpenCard, toggleFullPage } from '../../redux/views'
 import DetailCard from '../DetailCard/DetailCard'
-const { getDistance, sort } = require('../../utilities')
  
 
  
@@ -50,8 +48,7 @@ class Map extends React.Component {
 
 
   render() {
-    console.log(this.props, this.state)
-    const { lat, lng, name } = this.props.center
+    const { lat, lng } = this.props.center
     const boulders = this.props.filter.boulders ? this.props.boulders : []
     const camps = this.props.filter.camps ? this.props.camps : []
     const hikes = this.props.filter.hikes ? this.props.hikes : []
@@ -89,7 +86,7 @@ class Map extends React.Component {
               {pins.map((p, i) => {
                 if (i === this.poppedUp){
                   return (
-                    <DetailCard toggleFullPage={() => this.toggleDetailView(p)} type={p.type} area={p.area} handleClick={toggleOpenCard} />
+                    <DetailCard toggleFullPage={() => this.toggleFullPage(p)} type={p.type} area={p.area} handleClick={toggleOpenCard} />
                   )
                 }
                 else {
@@ -100,10 +97,9 @@ class Map extends React.Component {
                       id={i}
                       lat={p.latitude}
                       lng={p.longitude}
-                      toggleFullPage={() => this.props.toggleDetailView(p)}
+                      toggleFullPage={() => this.props.toggleFullPage(p)}
                       area={p}
                       setPoppedUp={() => this.setPoppedUp(i)}
-                      id={i}
                     />
                   )
                 }
@@ -115,7 +111,7 @@ class Map extends React.Component {
                 <List 
                 sortFilter={this.props.sortFilter}
                 height={this.props.height}
-                toggleFullPage={this.props.toggleDetailView}
+                toggleFullPage={this.props.toggleFullPage}
                 camps={this.state.campgrounds} 
                 hikes={this.state.hikes} 
                 boulders={this.state.boulders}/>
@@ -127,7 +123,6 @@ class Map extends React.Component {
 }
 
 const mapState = (state) => {
-  console.log(state, 'from mapstate')
   return {
     location: state.location,
     hikes: state.hikes,
@@ -145,7 +140,7 @@ const mapDispatch = (dispatch) => {
     fetchCamps: (lat, lng) => dispatch(fetchCamps(lat, lng)),
     fetchBoulders: (lat, lng) => dispatch(fetchBoulders(lat, lng)),
     toggleOpenCard: (card) => dispatch(toggleOpenCard(card)),
-    toggleDetailView: (item) => dispatch(toggleDetailView(item)) 
+    toggleFullPage: (item) => dispatch(toggleFullPage(item)) 
   }
 }
 
