@@ -1,8 +1,7 @@
 import axios from 'axios'
+import getKey from '../utilities/getKey'
 // import { mapsKey } from '../secrets'
-
-
-const mapsKey = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? require('../secrets').mapsKey : process.env.MAPS_KEY
+const mapsKey = getKey()
 
 
 const SET_LOCATION = 'SET_LOCATION'
