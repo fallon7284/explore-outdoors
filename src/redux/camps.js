@@ -1,5 +1,5 @@
-import { getDistance } from '../utilities'
 import axios from 'axios'
+const { getDistance } = require('../utilities')
 // action types
 const SET_CAMPS = 'SET_CAMPS'
 
