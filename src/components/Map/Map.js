@@ -1,6 +1,5 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react'
-import { mapsKey } from '../../secrets'
 import DisplayContainer from '../DisplayContainer/DisplayContainer'
 import List from '../List/List'
 import SideBar from '../SideBar/SideBar';
@@ -78,7 +77,7 @@ class Map extends React.Component {
               }}
             >
             <GoogleMapReact
-              bootstrapURLKeys={{ key: mapsKey }}
+              bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS_KEY }}
               center={{lat, lng}}
               defaultCenter={{lat: 0, lng: 0}}
               defaultZoom={this.props.zoom}
