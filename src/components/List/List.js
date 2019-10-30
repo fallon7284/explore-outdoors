@@ -2,8 +2,8 @@ import React from 'react'
 import BoulderListItem from '../BoulderListItem/BoulderListItem'
 import CampListItem from '../CampListItem/CampListItem'
 import HikeListItem from '../HikeListItem/HikeListItem'
-import { sort } from '../../utilities'
 import { connect } from 'react-redux';
+const { sort } = require('../../utilities')
 
 const List = (props) => {
     const toggleFullPage = props.toggleFullPage
