@@ -1,63 +1,46 @@
 import React from 'react'
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
 
 export default function DetailCard(props){
-    let content
+    let name = props.area.name
+    let image, text
     switch(props.area.type){
         case 'camp':{
-            content = <div style={{opacity: 1}}>
-                <div>
-                {props.area.name}
-            </div>
-            <div>
-                {`This campground in ${props.area.location} has ${props.area.numCampsites} campsites available for reservation and is ${props.area.distance.toFixed(1)} miles away from your location.`}
-                <div onClick={() => props.toggleFullPage(props.area)} style={{textDecoration: 'none', color: 'white', fontWeight: 'bold', cursor: 'pointer'}}>See more!</div>
-                <img style={{height: '100%', width: '100%', opacity: 1}} src={props.area.imgUrl} alt=''></img>
-            </div>
-            </div>
+            image = props.area.imgUrl
+            text = `This campground in ${props.area.location} has ${props.area.numCampsites} campsites available for reservation and is ${props.area.distance.toFixed(1)} miles away from your location.`
             break
             }
         case 'pin':{
-            content = <div>
-                pin location
-            </div>
+            image = 'image'
+            text = 'text'
             break
         }
         case 'hike':{
-            content = <div style={{opacity: 1}}>
-            <div>
-            {props.area.name}
-            </div>
-            <div>
-                {`This hike in ${props.area.location} climbs from a low of ${props.area.low}' to a high of ${props.area.high}' above sea level with a total ascent of ${props.area.ascent} over ${props.area.length} miles and is ${props.area.distance.toFixed(1)} miles away from your location.`}
-                <div onClick={() => props.toggleFullPage(props.area)} style={{textDecoration: 'none', color: 'white', fontWeight: 'bold', cursor: 'pointer'}}>See more!</div>
-                <img style={{height: '100%', width: '100%', opacity: 1}} src={props.area.imgMedium} alt=''></img>
-            </div>
-            </div>
+            text = `This hike in ${props.area.location} climbs from a low of ${props.area.low}' to a high of ${props.area.high}' above sea level with a total ascent of ${props.area.ascent} over ${props.area.length} miles and is ${props.area.distance.toFixed(1)} miles away from your location.`
+            image = props.area.imgMedium
             break
         }
         case 'boulder':{
-            content = <div style={{opacity: 1}}>
-            <div>
-            {props.area.name}
-            </div>
-            <div>
-                {`This boulder in ${props.area.location[0]} is a ${props.area.rating} with a ${props.area.stars} star rating and is ${props.area.distance.toFixed(1)} miles away from your location.`}
-                <div onClick={() => props.toggleFullPage(props.area)} style={{textDecoration: 'none', color: 'white', fontWeight: 'bold', cursor: 'pointer'}}>See more!</div>
-                <img style={{height: '100%', width: '100%', opacity: 1}} src={props.area.imgMedium} alt=''></img>
-            </div>
-            </div>
+            name = props.area.name
+            image = props.area.imgMedium
+            text = `This boulder in ${props.area.location} is a ${props.area.rating} with a ${props.area.stars} star rating and is ${props.area.distance.toFixed(1)} miles away from your location.`
             break
     }
         default: {
-            content = <div>
-                current location
-                </div>
+            image = 'image'
+            text = 'text'
             break
         }    
     }
     return (
-        <div style={{position: 'fixed', zIndex: '9999', backgroundColor: '#303030', borderTopLeftRadius: '10%', borderTopRightRadius: '10%', height: '18em', width: '18em', color: 'white', fontSize: '14px'}}>
-            {content}
-        </div>
+        <Card style={{ width: '18rem', zIndex: '9999' }}>
+            <Card.Img variant="top" src={image} />
+            <Card.Body>
+                <Card.Title>{name}</Card.Title>
+                <Card.Text>{text}</Card.Text>
+                <Button variant="primary" onClick={() => props.toggleFullPage(props.area)}>See More</Button>
+            </Card.Body>
+        </Card>
     )
 }

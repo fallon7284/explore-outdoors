@@ -16,7 +16,6 @@ const SideBar = require('./SideBar/SideBar')
 const SideButton = require('./SideButton/SideButton')
 const ToggleCategoryButton = require('./ToggleCategoryButton/ToggleCategoryButton')
 const ToggleViewButton = require('./ToggleViewButton/ToggleViewButton')
-const WelcomeScreen = require('./WelcomeScreen/WelcomeScreen')
 
 module.exports = { 
     BoulderListItem, 
@@ -36,6 +35,5 @@ module.exports = {
     SideBar,
     SideButton,
     ToggleCategoryButton,
-    ToggleViewButton,
-    WelcomeScreen
+    ToggleViewButton
 }

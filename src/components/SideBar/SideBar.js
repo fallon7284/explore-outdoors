@@ -6,6 +6,8 @@ import SortByButton from '../SortByButton/SortByButton'
 import { connect } from 'react-redux'
 import { toggleMapView } from '../../redux/views'
 import { setFilter } from '../../redux/filters'
+import './SideBar.css'
+
 
 
 const SideBar = (props) => {
