@@ -1,11 +1,8 @@
-const BoulderListItem = require('./BoulderListItem/BoulderListItem')
 const BoulderPage = require('./BoulderPage/BoulderPage')
-const CampListItem = require('./CampListItem/CampListItem')
 const CampPage = require('./CampPage/CampPage')
 const DetailCard = require('./DetailCard/DetailCard')
 const DisplayContainer = require('./DisplayContainer/DisplayContainer')
 const FullPage = require('./FullPage/FullPage')
-const HikeListItem = require('./HikeListItem/HikeListItem')
 const HikePage = require('./HikePage/HikePage')
 const Home = require('./Home/Home')
 const List = require('./List/List')
@@ -18,14 +15,11 @@ const ToggleCategoryButton = require('./ToggleCategoryButton/ToggleCategoryButto
 const ToggleViewButton = require('./ToggleViewButton/ToggleViewButton')
 
 module.exports = { 
-    BoulderListItem, 
     BoulderPage, 
-    CampListItem, 
     CampPage, 
     DetailCard, 
     DisplayContainer, 
     FullPage, 
-    HikeListItem,
     HikePage,
     Home,
     List,
