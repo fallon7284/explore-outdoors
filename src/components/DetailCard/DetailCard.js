@@ -34,13 +34,15 @@ export default function DetailCard(props){
         }    
     }
     return (
-        <Card style={{ width: '18rem', zIndex: '9999' }}>
-            <Card.Img variant="top" src={image} />
-            <Card.Body>
-                <Card.Title>{name}</Card.Title>
-                <Card.Text>{text}</Card.Text>
-                <Button variant="primary" onClick={() => props.toggleFullPage(props.area)}>See More</Button>
-            </Card.Body>
-        </Card>
+        <div>
+            <Card bg="success" text="white" style={{ width: '18rem', zIndex: '9999' }}>
+                <Card.Img variant="top" src={image} />
+                <Card.Body>
+                    <Card.Title>{name}</Card.Title>
+                    <Card.Text>{text}</Card.Text>
+                    <Button variant="light" onClick={() => props.toggleFullPage(props.area)}>See More</Button>
+                </Card.Body>
+            </Card>
+        </div> 
     )
 }
