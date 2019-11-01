@@ -1,11 +1,6 @@
 import React from 'react'
-import BoulderListItem from '../BoulderListItem/BoulderListItem'
-import CampListItem from '../CampListItem/CampListItem'
-import HikeListItem from '../HikeListItem/HikeListItem'
 import { connect } from 'react-redux';
 import Card from 'react-bootstrap/Card'
-import CardDeck from 'react-bootstrap/CardDeck'
-import CardColumns from 'react-bootstrap/CardColumns'
 import './List.css'
 const { sort } = require('../../utilities')
 
