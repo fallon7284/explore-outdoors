@@ -30,16 +30,6 @@
   flex-direction: row;
 }
 
-.side-bar{
-  position: fixed;
-  background-color: rgb(21, 104, 0);
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 12vw;
-  align-items: center;
-}
-
 .map-page{
   /* left: 12vw;
   width: 88vw;
@@ -119,12 +109,12 @@
   background-size: cover;
 } */
 
-.map-body{
+/* .map-body{
   position: fixed;
   z-index: 1;
   height: 50%;
   width: 50%;
-}
+} */
 
 .map-section{
   position: fixed;

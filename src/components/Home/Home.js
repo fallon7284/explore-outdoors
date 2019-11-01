@@ -4,6 +4,7 @@ import FullPage from '../FullPage/FullPage'
 import { connect } from 'react-redux'
 import { toggleFullPage } from '../../redux/views'
 import { fetchLocation, fetchCustomLocation } from '../../redux/location';
+import SideBar from '../SideBar/SideBar'
 
 
 class Home extends React.Component{
@@ -21,6 +22,7 @@ class Home extends React.Component{
         this.handleChange = this.handleChange.bind(this)
         this.handleAddressInput = this.handleAddressInput.bind(this)
         this.toggleFullPage = this.toggleFullPage.bind(this)
+        this.toggleFilters = this.toggleFilters.bind(this)
     }
 
     async componentDidMount(){
@@ -49,21 +51,26 @@ class Home extends React.Component{
         this.setState({inputVal: e.target.value})
     }
 
-
     render(){
         return (
-            <div
+            <div style={{height: '100%', display: 'flex', flexDirection: 'row'}}
             >
+                <SideBar 
+                    toggleFilters={this.toggleFilters} 
+                    handleAddressInput={this.props.handleAddressInput}
+                    toggleMapView={this.props.toggleMapView}
+                    mapView={this.props.mapView}
+                    setSortFilter={this.props.setSortFilter}
+                />
                 <div>
                 <Map
-                    toggleFilters={this.toggleFilters.bind(this)} 
-                    handleAddressInput={this.handleAddressInput.bind(this)}
-                    className="map-body"
+                    toggleFilters={this.toggleFilters} 
+                    handleAddressInput={this.handleAddressInput}
                     height={this.props.detailView ? '50vh' : '100vh'}
                     zoom={this.state.zoom}
                     center={this.props.location} 
                     filter={this.state.filter}
-                    />
+                />
                 {this.props.detailView && <FullPage toggleFullPage={this.props.toggleFullPage} area={this.props.detailView}/>}
                 </div>  
             </div>     
