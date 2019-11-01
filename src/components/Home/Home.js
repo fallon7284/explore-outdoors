@@ -57,7 +57,7 @@ class Home extends React.Component{
             >
                 <SideBar 
                     toggleFilters={this.toggleFilters} 
-                    handleAddressInput={this.props.handleAddressInput}
+                    handleAddressInput={this.handleAddressInput}
                     toggleMapView={this.props.toggleMapView}
                     mapView={this.props.mapView}
                     setSortFilter={this.props.setSortFilter}

@@ -2,7 +2,6 @@ import React from 'react'
 import GoogleMapReact from 'google-map-react'
 import DisplayContainer from '../DisplayContainer/DisplayContainer'
 import List from '../List/List'
-// import SideBar from '../SideBar/SideBar';
 import { connect } from 'react-redux'
 import { fetchHikes } from '../../redux/hikes'
 import { fetchCamps } from '../../redux/camps'
@@ -52,12 +51,14 @@ class Map extends React.Component {
     const camps = this.props.filter.camps ? this.props.camps : []
     const hikes = this.props.filter.hikes ? this.props.hikes : []
     const pins = [...boulders, ...camps, ...hikes]
+    const style = {height: '100%', width: '88%', position: 'fixed'}
+    const hiddenStyle = this.props.mapView ? {} : {visibility: 'hidden'}
     return (
       <div 
         className="map-component"
       >
         <div>
-            <div style={{height: '100%', width: '88%', position: 'fixed'}}
+            <div style={{...style, ...hiddenStyle}}
             >
             <GoogleMapReact
               bootstrapURLKeys={{ key: process.env.REACT_APP_MAPS_KEY }}

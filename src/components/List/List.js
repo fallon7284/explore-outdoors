@@ -3,6 +3,10 @@ import BoulderListItem from '../BoulderListItem/BoulderListItem'
 import CampListItem from '../CampListItem/CampListItem'
 import HikeListItem from '../HikeListItem/HikeListItem'
 import { connect } from 'react-redux';
+import Card from 'react-bootstrap/Card'
+import CardDeck from 'react-bootstrap/CardDeck'
+import CardColumns from 'react-bootstrap/CardColumns'
+import './List.css'
 const { sort } = require('../../utilities')
 
 const List = (props) => {
@@ -10,30 +14,59 @@ const List = (props) => {
     const sortFilter = props.sortFilter
     const sortedHikes = sort(props.hikes, sortFilter)
     const sortedCamps = sort(props.camps, sortFilter)
-    console.log(props.camps)
     const sortedBoulders = sort(props.boulders, sortFilter)
+    const titleStyle = {color: 'white', fontWeight: 'bold'}
+    const cardStyle = {color: 'black', fontWeight: '300'}
     return (
         <div className="list-page" >
-            <div className="list-title-bar" style={{width: '88%', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr'}}>
-                <div>Campgrounds
-                    <div style={{overflowY: 'scroll', position: 'fixed', height: '100%', width: '25%', justifySelf: 'center'}}>
-                    {sortedCamps.map((c, i)=> {
-                        return <CampListItem toggleFullPage={() => toggleFullPage(c, 'camp')} name={c.name} area={c.area} key={`camp${i}`} image={c.imgUrl}/>
-                    })}
+            <div 
+            style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', backgroundColor: 'rgb(21, 104, 0)'}}
+            >
+                <div style={titleStyle}>Campgrounds
+                    <div style={{overflowY: 'scroll', position: 'fixed', height: '100%', width: '30%', justifyContent: 'space-around'}}>
+                    {sortedCamps.length ? sortedCamps.map((c, i)=> {
+                        return (
+                            <div style={{marginBottom: '1%'}}>
+                                <Card key={`camp${i}`} text="black" onClick={() => toggleFullPage(c, 'camp')} style={{marginBottom: '2%', cursor: 'pointer'}}>
+                                    <Card.Img variant="top" src={c.imgUrl}></Card.Img>
+                                    <Card.Body style={cardStyle}>
+                                        <Card.Text >{c.name}</Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </div>  
+                        )
+                    }) : <div>No Campgrounds</div>}
                     </div>
                 </div>
-                <div>Hiking Trails
-                    <div style={{overflowY: 'scroll', position: 'fixed', height: '100%', width: '25%', justifySelf: 'center'}}>
+                <div style={titleStyle}>Hiking Trails
+                    <div 
+                    style={{overflowY: 'scroll', position: 'fixed', height: '100%', width: '28%', justifySelf: 'center'}}
+                    >
                     {sortedHikes.map((h, i)=> {
-                        return <HikeListItem toggleFullPage={() => toggleFullPage(h, 'hike')} name={h.name} area={h.area} key={`hike${i}`} image={h.imgMedium}/>
+                        return (
+                        <Card key={`hike${i}`} text="black" onClick={() => toggleFullPage(h, 'hike')} style={{marginBottom: '2%', cursor: 'pointer'}}>
+                            <Card.Img variant="top" src={h.imgMedium}></Card.Img>
+                            <Card.Body style={cardStyle}>
+                                <Card.Text >{h.name}</Card.Text>
+                            </Card.Body>
+                        </Card>
+                        )
                     })}
                     </div>
                 </div>
-                <div>Boulder Problems
-                    <div style={{overflowY: 'scroll', position: 'fixed', height: '100%', width: '25%', justifySelf: 'center'}}>
+                <div style={titleStyle}>Boulder Problems
+                    <div style={{overflowY: 'scroll', position: 'fixed', height: '100%', width: '28%', justifySelf: 'center', color: 'black'}}>
                     {sortedBoulders.map((b, i)=> {
-                        return <BoulderListItem toggleFullPage={() => toggleFullPage(b, 'boulder')} name={b.name} area={b.location[0]} key={`boulder${i}`} image={b.imgSmall ? b.imgSmall : b.imgMedium}/>
-                    })}
+                        return (
+                            <Card key={`boulder${i}`} text="black" onClick={() => toggleFullPage(b, 'boulder')} style={{marginBottom: '2%', cursor: 'pointer'}}>
+                                <Card.Img variant="top" src={b.imgMedium}></Card.Img>
+                                <Card.Body style={cardStyle}>
+                                    <Card.Text >{b.name}</Card.Text>
+                                    <Card.Text >Rating: {b.rating}</Card.Text>
+                                </Card.Body>
+                            </Card>
+                            )
+                        })}
                     </div>
                 </div>
             </div>

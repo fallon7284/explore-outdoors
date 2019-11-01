@@ -7,12 +7,20 @@ import { connect } from 'react-redux'
 import { toggleMapView } from '../../redux/views'
 import { setFilter } from '../../redux/filters'
 import './SideBar.css'
+import Button from 'react-bootstrap/Button'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
+const logo = require('../../images/Explore Outdoors Logo.png')
 
 
 
 const SideBar = (props) => {
+    const view = props.mapView ? 'List View' : 'Map View'
+    console.log(props)
     return (
         <div className="side-bar">
+            <img src={logo} style={{width: '100%'}}></img>
             <ToggleCategoryButton toggleFilters={props.toggleFilters} name="Hikes"/>
             <ToggleCategoryButton toggleFilters={props.toggleFilters} name="Camps"/>
             <ToggleCategoryButton toggleFilters={props.toggleFilters} name="Boulders"/>
@@ -32,7 +40,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
     return {
         toggleMapView: () => dispatch(toggleMapView()),
-        setFilter: (filter) => dispatch(setFilter(filter))
+        setFilter: (filter) => dispatch(setFilter(filter)),
+        // handleAddressInput: () dispatch()
     }
 }
 

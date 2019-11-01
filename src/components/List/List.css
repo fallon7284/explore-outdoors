@@ -1,0 +1,9 @@
+.list-page{
+    background-color: rgb(21, 104, 0);
+    z-index: 9999;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 88%;
+  }

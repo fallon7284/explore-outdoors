@@ -1,4 +1,5 @@
 import React from 'react'
+import logo from '../../images/Explore Outdoors Logo.png'
 
 export default ({area, toggleFullPage}) => {
     console.log(area)
@@ -13,9 +14,10 @@ export default ({area, toggleFullPage}) => {
                 <div onClick={() => toggleFullPage()} style={{cursor: 'pointer', width: '70px'}}>Close[X]</div>
             </div>
             <div style={{height: 'calc(100% - 25px)', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', justifyContent: 'space-between', color: 'black'}}>
-                {area.imgUrl && 
-                <img alt="trail" src={area.imgUrl} style={{maxHeight: '100%', maxWidth: '100%', alignSelf: 'center', justifySelf: 'center'}}/>}
-                <div style={{top: 'calc(50% + 25px)', color: 'black', backgroundColor: 'white', marginLeft: '.5vh'}}>
+                <div style={{backgroundColor: 'white', width: '100%'}}>
+                    <img alt="trail" src={area.imgUrl || logo} style={{maxHeight: '100%', maxWidth: '100%', alignSelf: 'center', justifySelf: 'center'}}/>
+                </div>
+                <div style={{top: 'calc(50% + 25px)', color: 'black', backgroundColor: 'white', paddingLeft: '.5vh'}}>
                     <h3>Location: </h3>
                     {Array.isArray(area.location) ? <ul>
                         Location: 
@@ -28,11 +30,6 @@ export default ({area, toggleFullPage}) => {
                     <p>{area.numCampsites}</p>
                     <a href={area.url} target='_blank' rel='noopener noreferrer'><h4>View online</h4></a>
                 </div>
-                {/* <div style={{top: 'calc(50% + 25px)', color: 'black', backgroundColor: 'white', marginLeft: '.5vh'}}>
-                    <h3>Distance:</h3>
-                    <p>{area.length} miles</p>
-                    
-                </div> */}
             </div>
         </div>
     )
