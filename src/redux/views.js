@@ -35,7 +35,6 @@ export default function(state = defaultViews, action){
                 mapView: !state.mapView
             }
         case TOGGLE_FULL_PAGE:
-            console.log(action.index)
             return {
                 ...state,
                 detailView: action.index

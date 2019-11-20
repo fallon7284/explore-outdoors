@@ -15,9 +15,6 @@ class Map extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      campgrounds: [],
-      hikes: [],
-      boulders: [],
       poppedUp: null
     }
   }
@@ -83,6 +80,7 @@ class Map extends React.Component {
                       toggleFullPage={() => this.props.toggleFullPage(p)}
                       area={p}
                       setPoppedUp={() => this.setPoppedUp(i)}
+                      poppedUp={this.state.poppedUp}
                     />
                   )
                 }
