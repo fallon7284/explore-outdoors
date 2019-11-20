@@ -36,6 +36,14 @@ export default function DetailCard(props){
     return (
         <div>
             <Card bg="success" text="white" style={{ width: '18rem', zIndex: '9999' }}>
+                <button onClick={props.close} style={{
+                    right: '5px',
+                    top: '5px',
+                    position: 'absolute', 
+                    fontSize: '2em', 
+                    width: 'auto', 
+                    borderRadius: '100%'}}>X
+                </button>
                 <Card.Img variant="top" src={image} />
                 <Card.Body>
                     <Card.Title>{name}</Card.Title>

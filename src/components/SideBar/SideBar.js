@@ -16,8 +16,6 @@ const logo = require('../../images/Explore Outdoors Logo.png')
 
 
 const SideBar = (props) => {
-    const view = props.mapView ? 'List View' : 'Map View'
-    console.log(props)
     return (
         <div className="side-bar">
             <img src={logo} style={{width: '100%'}}></img>
