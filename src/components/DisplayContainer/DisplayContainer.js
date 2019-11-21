@@ -58,7 +58,7 @@ export default function DisplayContainer(props){
         <div style={{width: '30px', height: '40px', zIndex: '3'}} 
             onMouseOver={handleMouseOver} 
             onMouseOut={handleMouseOut} 
-            onClick={() => props.poppedUp === null && handleClick()}
+            onClick={() => !(props.poppedUp === props.id) && handleClick()}
         >
            { 
             //    popUp
@@ -69,7 +69,7 @@ export default function DisplayContainer(props){
                 type={props.type} 
                 area={props.area} 
                 handleClick={handleClick} 
-                close={() => setPoppedUp(props.id)}
+                close={() => setPoppedUp()}
             />
            : 
             <div>
