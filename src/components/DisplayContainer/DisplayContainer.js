@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import blueMapPin from '../../images/blueMapPin.png'
 import redPin from '../../images/redpin.png'
 import campPin from '../../images/camp.png'
-import hiker from '../../images/hiker.jpg'
+import hiker from '../../images/hiker.PNG'
 import DetailCard from '../DetailCard/DetailCard'
 import climber from '../../images/climb.png'
 
@@ -24,7 +24,7 @@ export default function DisplayContainer(props){
         setPoppedUp()
     }
 
-    const [width, height] = hovered ? ['30px', '40px'] : ['20px', '25px']
+    const [width, height] = hovered ? ['30px', '40px'] : ['30px', '25px']
 
     let src
     let text = props.text ? props.text : props.area.name
