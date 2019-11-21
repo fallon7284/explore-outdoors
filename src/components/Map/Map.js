@@ -35,9 +35,7 @@ class Map extends React.Component {
   }
 
   setPoppedUp(poppedUp){
-    if (poppedUp === this.state.poppedUp){
-      poppedUp = null
-    }
+    if (poppedUp === this.state.poppedUp) poppedUp = null
     this.setState({poppedUp})
   }
 
@@ -50,6 +48,7 @@ class Map extends React.Component {
     const pins = [...boulders, ...camps, ...hikes]
     const style = {height: '100%', width: '88%', position: 'fixed'}
     const hiddenStyle = this.props.mapView ? {} : {visibility: 'hidden'}
+    console.log(this.state.poppedUp)
     return (
       <div 
         className="map-component"
