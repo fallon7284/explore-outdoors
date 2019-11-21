@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 export default ({toggleFilters, name, backgroundColor}) => {
     backgroundColor = backgroundColor ? backgroundColor : 'rgb(200, 200, 200)'
     const [clicked, setClicked] = useState(false)
-    const lineThrough = clicked ? 'line-through red' : 'none'
+    const seeOrHide = clicked ? "See" : "Hide"
     return (
         <div
             onClick={() => {
@@ -14,7 +14,6 @@ export default ({toggleFilters, name, backgroundColor}) => {
             style={{
                 fontFamily: 'futura',
                 color: 'white',
-                textDecoration: lineThrough,
                 cursor: 'pointer', 
                 backgroundColor, 
                 width: '95%', 
@@ -25,7 +24,7 @@ export default ({toggleFilters, name, backgroundColor}) => {
                 marginTop: '3px',
                 }} 
         >
-            {`${name}`}
+            {`${seeOrHide} ${name}`}
         </div>
     )
 }
